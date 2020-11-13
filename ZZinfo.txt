@@ -1,0 +1,31 @@
+
+npm install express 
+npm install pug
+npm install body-parser
+npm install express-validator
+npm install dotenv <!-- for db -->
+npm install mongoose
+
+
+https://www.sitepoint.com/build-simple-beginner-app-node-bootstrap-mongodb/
+
+
+.env is in gitignore for mongodb connection detail
+
+_____________________________________________________________________________
+Kick off the App
+
+Finally, let’s add an npm script to make nodemon start watching our app. 
+Change the scripts section of the package.json file to look like this:
+
+"scripts": {
+  "watch": "nodemon ./start.js"
+},
+
+The scripts property of the package.json file is extremely useful, 
+as it lets you specify arbitrary scripts to run in different scenarios. 
+This means that you don’t have to repeatedly type out long-winded commands 
+with a difficult-to-remember syntax. 
+
+Now, type npm run watch from the terminal and visit http://localhost:8000.
+_____________________________________________________________________________
