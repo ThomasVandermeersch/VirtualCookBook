@@ -1,6 +1,9 @@
 const express = require('express');
-const router = express.Router();
+const mongoose = require('mongoose');
 const { check, validationResult } = require('express-validator');
+
+const router = express.Router();
+const Registration = mongoose.model('Registration');
 
 router.get('/', (req, res) => {
     //   res.send("<h1>It works!</h1>");
@@ -22,8 +25,17 @@ router.post('/',
     (req, res) => {
         const errors = validationResult(req);
 
+        // if (errors.isEmpty()) {
+        //     res.send('Thank you for your registration!');
+        //     console.log(req.body);
         if (errors.isEmpty()) {
-            res.send('Thank you for your registration!');
+            const registration = new Registration(req.body);
+            registration.save()
+                .then(() => { res.send('Thank you for your registration!'); })
+                .catch((err) => {
+                    console.log(err);
+                    res.send('Sorry! Something went wrong.');
+                });
             console.log(req.body);
         } else {
             res.render('form', {
@@ -31,7 +43,18 @@ router.post('/',
                 errors: errors.array(),
                 data: req.body,
             });
-            
         }
+    }
+);
 
-    });
+router.get('/registrations', (req, res) => {
+    res.render('index', { title: 'Listing registrations' });
+});
+
+router.get('/registrations', (req, res) => {
+    Registration.find()
+      .then((registrations) => {
+        res.render('index', { title: 'Listing registrations', registrations });
+      })
+      .catch(() => { res.send('Sorry! Something went wrong.'); });
+  });
