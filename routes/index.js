@@ -6,7 +6,7 @@ const router = express.Router();
 const Registration = mongoose.model('Registration');
 
 //////////////////////////////////////////
-// HTTP authentification
+// HTTP authentication
 const path = require('path');
 const auth = require('http-auth');
 
