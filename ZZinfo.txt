@@ -5,6 +5,7 @@ npm install body-parser
 npm install express-validator
 npm install dotenv <!-- for db -->
 npm install mongoose
+npm install http-auth
 
 
 https://www.sitepoint.com/build-simple-beginner-app-node-bootstrap-mongodb/

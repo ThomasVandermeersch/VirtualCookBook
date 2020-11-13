@@ -5,6 +5,18 @@ const { check, validationResult } = require('express-validator');
 const router = express.Router();
 const Registration = mongoose.model('Registration');
 
+//////////////////////////////////////////
+// HTTP authentification
+const path = require('path');
+const auth = require('http-auth');
+
+const basic = auth.basic({
+    file: path.join(__dirname, '../users.htpasswd'),
+  });
+  
+//////////////////////////////////////////
+  
+
 router.get('/', (req, res) => {
     //   res.send("<h1>It works!</h1>");
     res.render('form', { title: 'Registration form' });
@@ -51,10 +63,10 @@ router.get('/registrations', (req, res) => {
     res.render('index', { title: 'Listing registrations' });
 });
 
-router.get('/registrations', (req, res) => {
+router.get('/registrations', basic.check((req, res) => { //basic.check() used to protect via password
     Registration.find()
       .then((registrations) => {
         res.render('index', { title: 'Listing registrations', registrations });
       })
       .catch(() => { res.send('Sorry! Something went wrong.'); });
-  });
+  }));
