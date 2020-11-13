@@ -1,0 +1,19 @@
+{
+  "name": "virtualcookbook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThomasVandermeersch/VirtualCookBook.git"
+  },
+  "author": "Martin and Thomas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ThomasVandermeersch/VirtualCookBook/issues"
+  },
+  "homepage": "https://github.com/ThomasVandermeersch/VirtualCookBook#readme"
+}
