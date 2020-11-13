@@ -8,6 +8,7 @@ mongoose.connect(process.env.DATABASE, {
     useUnifiedTopology: true
 });
 
+
 mongoose.connection
     .on('open', () => {
         console.log('Mongoose connection open');
