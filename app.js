@@ -1,9 +1,33 @@
+//CONNECT THE APPLICATION WITH A DATABASE
+require('dotenv').config();
+
+const mongoose = require('mongoose');
+
+//LINK THE DIFFERENT MODELS
+
+require('./Models/Product');
+require('./Models/Recipe');
+
+mongoose.connect(process.env.DATABASE, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+mongoose.connection
+  .on('open', () => {
+    console.log('Mongoose connection open');
+  })
+  .on('error', (err) => {
+    console.log(`Connection error: ${err.message}`);
+  });
+
+
 //Creation of a server
 const express = require("express")
 app = express()
 
-const addProduct = require("./addProduct.js")
-const addReciepe = require("./addReciepe")
+const addProduct = require("./Controller/addProduct.js")
+const addRecipe = require("./Controller/addRecipe")
 
 app.get("/",function(req, res){
     res.end("<h1> Hello World </h1>")
@@ -14,9 +38,9 @@ app.post("/addProduct",function(req,res){
     addProduct(req.query)
 })
 
-app.post("/addReciepe", (req,res)=>{
+app.post("/addRecipe", (req,res)=>{
     res.end("<h1> Document inserted </h1>");
-    addReciepe(req.query)
+    addRecipe(req.query)
 })
 
 app.listen(8000)
