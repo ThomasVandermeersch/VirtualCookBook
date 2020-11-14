@@ -10,7 +10,7 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  scoreNutritionnel: {
+  nutritiveScore: {
     type: String,
     trim: true,
   },
@@ -18,7 +18,7 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  ingredients: {
+  products: {
     type: Array,
     trim: true,
   },
