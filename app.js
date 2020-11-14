@@ -28,9 +28,15 @@ app = express()
 
 const addProduct = require("./Controller/addProduct.js")
 const addRecipe = require("./Controller/addRecipe")
+const searchProduct = require("./Controller/searchProduct")
 
 app.get("/",function(req, res){
     res.end("<h1> Hello World </h1>")
+})
+
+
+app.get("/search/Product", async (req,res) =>{
+  searchProduct(req.query,res)
 })
 
 app.post("/addProduct",function(req,res){

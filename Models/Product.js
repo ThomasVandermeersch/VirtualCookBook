@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+
+//Define a Product Model
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -31,4 +33,5 @@ const productSchema = new mongoose.Schema({
   }
 });
 
+//Export the model to use it.
 module.exports = mongoose.model('Product', productSchema);
