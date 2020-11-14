@@ -9,23 +9,37 @@ block content
       for error in errors
         li= error.msg
 
-  form(action="." method="POST" class="form-registration")
+  form(action="/addRecipe" method="POST" class="form-registration")
     label(for="recipename") Recipe's name:
     input(
       type="text"
-      id="recipename"
-      name="recipename"
+      name="name"
       class="form-control"
-      value=data.name
+      required
     )
 
     label(for="time") Preparation Time (minutes):
     input(
-      type="int"
-      id="time"
+      type="text"
       name="time"
       class="form-control"
-      value=data.email
+      required
+    )
+    
+    label(for="nutritiveScore") Score nutritif :
+    input(
+      type="text"
+      name="nutritiveScore"
+      class="form-control"
+      required
+    )
+
+    label(for="category") Catégorie :
+    input(
+      type="text"
+      name="category"
+      class="form-control"
+      required
     )
 
     input(

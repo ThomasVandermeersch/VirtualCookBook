@@ -5,7 +5,7 @@ const reciperegistrationSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  email: {
+  time: {
     type: String,
     trim: true,
   },
