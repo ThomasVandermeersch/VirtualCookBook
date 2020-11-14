@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 
 //LINK THE DIFFERENT MODELS
 
-require('./Models/Product');
-require('./Models/Recipe');
+require('./models/Product');
+require('./models/Recipe');
 
 mongoose.connect(process.env.DATABASE, {
   useNewUrlParser: true,
@@ -26,10 +26,10 @@ mongoose.connection
 const express = require("express")
 app = express()
 
-const addProduct = require("./Controller/addProduct.js")
-const addRecipe = require("./Controller/addRecipe")
-const searchProduct = require("./Controller/searchProduct")
-const searchRecipe = require("./Controller/searchRecipe")
+const addProduct = require("./controller/addProduct.js")
+const addRecipe = require("./controller/addRecipe")
+const searchProduct = require("./controller/searchProduct")
+const searchRecipe = require("./controller/searchRecipe")
 
 app.get("/",function(req, res){
     res.end("<h1> Hello World </h1>")
