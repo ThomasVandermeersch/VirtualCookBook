@@ -5,7 +5,13 @@ body {
   .listing-reg h1 {
     text-align: center;
     margin: 0 0 2rem;
+    font-size: 700%;
   }
+  .listing-reg h2 {
+    text-align: center;
+    margin: 0 0 2rem;
+  }
+  
   
   /* css for registration form and errors*/
   .form-registration {
