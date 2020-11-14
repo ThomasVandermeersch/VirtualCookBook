@@ -3,13 +3,14 @@ extends layout
 
 block content
 
+
   if errors
     ul.my-errors
       for error in errors
         li= error.msg
 
-  form(action="/addRecipe" method="POST" class="form-registration")
-    label(for="recipename") Recipe's name:
+  form(action="/addProduct" method="POST" class="form-registration")
+    label(for="productname") Product's name:
     input(
       type="text"
       name="name"
@@ -17,18 +18,18 @@ block content
       required
     )
 
-    label(for="time") Preparation Time (minutes):
+    label(for="calories") Calories:
     input(
       type="text"
-      name="time"
+      name="calories"
       class="form-control"
       required
     )
     
-    label(for="nutritiveScore") Score nutritif :
+    label(for="unity") Unité de mesure :
     input(
       type="text"
-      name="nutritiveScore"
+      name="unity"
       class="form-control"
       required
     )

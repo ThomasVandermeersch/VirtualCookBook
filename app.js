@@ -1,19 +1,19 @@
 //Connexion to the database
-      const mongoose = require('mongoose');
-      require('dotenv').config();
+const mongoose = require('mongoose');
+require('dotenv').config();
 
-      mongoose.connect(process.env.DATABASE, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-      });
+mongoose.connect(process.env.DATABASE, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
-      mongoose.connection
-        .on('open', () => {
-          console.log('Mongoose connection open');
-        })
-        .on('error', (err) => {
-          console.log(`Connection error: ${err.message}`);
-        });
+mongoose.connection
+    .on('open', () => {
+        console.log('Mongoose connection open');
+    })
+    .on('error', (err) => {
+        console.log(`Connection error: ${err.message}`);
+    });
 
 
 //LINK THE DIFFERENT MODELS
@@ -45,29 +45,33 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
-app.get("/",function(req, res){
-  res.render('form', { title: 'Registration form' });
+app.get("/", function (req, res) {
+    res.render('form', { title: 'Registration form' });
 })
 
-app.get("/add/Recipe",function(req,res){
-  res.render('newrecipe',{title:'Add Recipe'})
+app.get("/add/Recipe", function (req, res) {
+    res.render('newrecipe', { title: 'Add Recipe' })
 })
 
-app.get("/search/Product", async (req,res) =>{
-  searchProduct(req.query,res)
+app.get("/add/Product", function (req, res) {
+    res.render('newproduct', { title: 'Add Product' })
 })
 
-app.get("/search/Recipe", async (req,res) =>{
-  searchRecipe(req.query,res)
+app.get("/search/Product", async (req, res) => {
+    searchProduct(req.query, res)
 })
 
-app.post("/addProduct",function(req,res){
-    res.end("<h1> Document inserted </h1>");
+app.get("/search/Recipe", async (req, res) => {
+    searchRecipe(req.query, res)
+})
+
+app.post("/addProduct", function (req, res) {
+    res.redirect("/search/Product")
     addProduct(req.body)
 })
 
-app.post("/addRecipe", (req,res)=>{
-  res.redirect("/search/Recipe")
+app.post("/addRecipe", (req, res) => {
+    res.redirect("/search/Recipe")
     addRecipe(req.body)
 })
 
