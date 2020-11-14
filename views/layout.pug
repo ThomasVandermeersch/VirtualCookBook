@@ -1,0 +1,34 @@
+doctype html
+html
+  head
+    title= `${title}`
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/styles.css')
+  
+  
+nav#navbar-default  
+  div.container-fluid
+    h1.navbar-header My Website!
+  ul
+    li
+      a(href = '/') Registration
+    li
+      a(href = '/newrecipe') New recipe
+    li
+      a Page 2
+
+
+
+  body
+  
+    div.container.listing-reg
+
+      img(src='/images/Cookbook.png'  style='width:8%; height:8%;')
+      h1 CookBook
+      h2 Welcome on our new website !
+
+      block content
+
+      #footer
+        p Thanks for visiting, don't forget to share this page with your friends
+

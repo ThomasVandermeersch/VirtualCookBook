@@ -1,0 +1,36 @@
+
+extends layout
+
+block content
+  -data = data || {}
+
+  if errors
+    ul.my-errors
+      for error in errors
+        li= error.msg
+
+  form(action="." method="POST" class="form-registration")
+    label(for="recipename") Recipe's name:
+    input(
+      type="text"
+      id="recipename"
+      name="recipename"
+      class="form-control"
+      value=data.name
+    )
+
+    label(for="time") Preparation Time (minutes):
+    input(
+      type="int"
+      id="time"
+      name="time"
+      class="form-control"
+      value=data.email
+    )
+
+    input(
+      type="submit"
+      value="Submit"
+      class="btn btn-lg btn-primary btn-block"
+    )
+
