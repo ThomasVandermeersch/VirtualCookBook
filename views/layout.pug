@@ -5,30 +5,78 @@ html
     link(rel='stylesheet', href='/css/bootstrap.min.css')
     link(rel='stylesheet', href='/css/styles.css')
   
+
+
+
+
+nav(
+  class="navbar navbar-expand-lg navbar-dark bg-dark"
+)
   
-nav#navbar-default  
-  div.container-fluid
-    h1.navbar-header My Website!
-  ul
-    li
-      a(href = '/') Registration
-    li
-      a(href = '/add/Recipe') New recipe
-    li
-      a(href = '/add/Product' ) New Product
+  a(
+    class="navbar-brand" 
+    href='/'
+    name = "CookBook"
+    
+  ) 
+    img(
+      src='/images/Cookbook.png'  
+      style='width:70px; height:70px;'
+    ) 
+  a(
+    class="navbar-brand" 
+    href='/'
+    name = "CookBook"
+    ) CookBook  
+    
+    
+    
 
 
 
-  body
-  
-    div.container.listing-reg
+  div(
+    class="collapse navbar-collapse" 
+    id="navbarNav"
+  )
+    ul(
+      class="navbar-nav"
+    )
+      li(
+        class="nav-item active"
+      )
+        a(
+          class="nav-link" 
+          href="/add/recipe" 
+          name = "add Recipe"
+        ) Add Recipe
 
-      img(src='/images/Cookbook.png'  style='width:8%; height:8%;')
-      h1 CookBook
-      h2 Welcome on our new website !
 
-      block content
+      li(
+        class="nav-item active"
+      )
+        a(
+          class="nav-link" 
+          href="/add/product" 
+          name = "add Product"
+        ) Add Product
 
-      #footer
-        p Thanks for visiting, don't forget to share this page with your friends
+
+
+
+
+
+
+
+
+body
+
+  div.container.listing-reg
+
+
+
+
+    block content
+
+    #footer
+      p Thanks for visiting, don't forget to share this page with your friends
 
