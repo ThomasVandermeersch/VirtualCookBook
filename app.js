@@ -33,10 +33,65 @@ const express = require("express")
 const path = require('path');
 const bodyParser = require('body-parser');
 
-// //Facebook Auth
-// const passport = require('passport')
-// const facebookStrategy = require('passport-facebook').Strategy
-// const session = require('express-session')
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+
+//Facebook Auth
+const passport = require('passport')
+const facebookStrategy = require('passport-facebook').Strategy
+const session = require('express-session')
+
+var configAuth = require('./auth');
+
+
+passport.use(new facebookStrategy({
+    clientID: configAuth.facebookAuth.clientID,
+    clientSecret: configAuth.facebookAuth.clientSecret,
+    callbackURL: configAuth.facebookAuth.callbackURL,
+    },
+    function (accessToken, refreshToken, profile, done) {
+        process.nextTick(function () {
+            userSchema.findOne({ 'facebook.id': profile.id }, function (err, user) {
+                if (err)
+                    return done(err);
+                if (user)
+                    return done(null, user);
+                else {
+                    var newUser = new user();
+                    newUser.facebook.id = profile.id;
+                    newUser.facebook.token = accessToken;
+                    newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
+                    newUser.facebook.email = profile.emails[0].value;
+
+                    newUser.save(function (err) {
+                        if (err)
+                            throw err;
+                        return done(null, newUser)
+
+                    })
+                }
+
+            });
+        });
+    }
+));
+  
+
+
+
+
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+
+
 
 
 app = express()
@@ -94,6 +149,26 @@ app.get("/register", function (req, res) {
 })
 
 
+
+
+// Redirect the user to Facebook for authentication.  When complete,
+// Facebook will redirect the user back to the application at
+//     /auth/facebook/callback
+app.get('/auth/facebook', passport.authenticate('facebook'));
+
+// Facebook will redirect the user to this URL after approval.  Finish the
+// authentication process by attempting to obtain an access token.  If
+// access was granted, the user will be logged in.  Otherwise,
+// authentication has failed.
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
+        successRedirect: '/',
+        failureRedirect: '/login'
+    }));
+
+
+
+
 app.listen(8000)
 
 
@@ -128,3 +203,7 @@ app.listen(8000)
 // app.use(express.static('public')); //Load files from 'public' ->CSS
 
 // module.exports = app;
+
+
+
+
