@@ -75,6 +75,14 @@ app.post("/addRecipe", (req, res) => {
     addRecipe(req.body)
 })
 
+app.get("/home", function (req, res) {
+    res.render('home', { title: 'CookBook - Home' });
+})
+
+app.get("/register", function (req, res) {
+    res.render('register', { title: 'Registration' });
+})
+
 app.listen(8000)
 
 
