@@ -33,12 +33,22 @@ const express = require("express")
 const path = require('path');
 const bodyParser = require('body-parser');
 
+// //Facebook Auth
+// const passport = require('passport')
+// const facebookStrategy = require('passport-facebook').Strategy
+// const session = require('express-session')
+
 
 app = express()
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(express.static('public')); //Load files from 'public' ->CSS
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// //Facebook Auth
+// app.use(passport.initialize());
+// app.use(passport.session());
+// app.use(session(process.env.FACEBOOKKEY))
 
 
 //_________________
@@ -82,6 +92,7 @@ app.get("/home", function (req, res) {
 app.get("/register", function (req, res) {
     res.render('register', { title: 'Registration' });
 })
+
 
 app.listen(8000)
 
