@@ -13,9 +13,9 @@ const stringSimilarity = require('string-similarity')
 module.exports = function wordSimilarity(mongoObject,word,field,level){
     //This array will contain the words of the mongoObject with key corresponding to the field parametre
     var ratingArray = []
-    
+    word = word.toLowerCase()
     for (var i = 0; i < mongoObject.length; i++) {
-        var score = stringSimilarity.compareTwoStrings(mongoObject[i][field],word)
+        var score = stringSimilarity.compareTwoStrings(mongoObject[i][field].toLowerCase(),word)
         var objectAndScore = {score:score,object:mongoObject[i]}
         
         ratingArray.push(objectAndScore)

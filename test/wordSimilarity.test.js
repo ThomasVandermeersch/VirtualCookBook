@@ -2,11 +2,11 @@ const wordSimilarity = require("../wordSimilarity.js")
 const assert = require('assert');
 
 
-object1 = {name:"Hats","price": 20}
+object1 = {name:"hats","price": 20}
 object2 = {name:"aricots","price": 20}
-object3 = {name:"Haricots","price": 20}
+object3 = {name:"haricots","price": 20}
 objectArray = [object1,object2,object3]
-objectArrayResponse1 = [object2,object3]
+objectArrayResponse1 = [object3,object2]
 
 
 describe('Word similarity test',()=>{
