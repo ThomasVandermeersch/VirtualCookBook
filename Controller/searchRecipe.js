@@ -10,7 +10,10 @@ module.exports = function searchRecipe(query, res){
     //Find a product with the given query and return it
     Recipe.find(query,{_id:0})
     .then((recipes) =>{
-        res.end(JSON.stringify(recipes))
+        Recipe.distinct('category')
+            .then((categories)=>{
+            res.render('searchRecipe', {title:"Search recipe", products: recipes, categories : categories })            
+        })
     })
     .catch(() => { res.send('Sorry! Something went wrong.'); });
 }

@@ -25,13 +25,15 @@ block content
       required
     )
     
-    label(for="nutritiveScore") Score nutritif :
-    input(
-      type="text"
+    label(for="category") Score nutritif :
+    select(
+      type="dropDown"
       name="nutritiveScore"
       class="form-control"
       required
     )
+      each category in ['A','B','C','D']
+        option=category
 
     label(for="category") Catégorie :
     select(
@@ -42,86 +44,9 @@ block content
     )
       each category in ['Breakfast','lunch','supper','desert','snacks']
         option=category
-
-
-    label(for="time") Preparation Time (minutes):
-    input(
-      type="text"
-      name="time"
-      class="form-control"
-      required
-    )
     
-    label(for="nutritiveScore") Score nutritif :
-    input(
-      type="text"
-      name="nutritiveScore"
-      class="form-control"
-      required
-    )
-
-    label(for="category") Catégorie :
-    select(
-      type="dropDown"
-      name="category"
-      class="form-control"
-      required
-    )
-      each category in ['Breakfast','lunch','supper','desert','snacks']
-        option=category
-
-    label(for="time") Preparation Time (minutes):
-    input(
-      type="text"
-      name="time"
-      class="form-control"
-      required
-    )
-    
-    label(for="nutritiveScore") Score nutritif :
-    input(
-      type="text"
-      name="nutritiveScore"
-      class="form-control"
-      required
-    )
-
-    label(for="category") Catégorie :
-    select(
-      type="dropDown"
-      name="category"
-      class="form-control"
-      required
-    )
-      each category in ['Breakfast','lunch','supper','desert','snacks']
-        option=category
-
-    label(for="time") Preparation Time (minutes):
-    input(
-      type="text"
-      name="time"
-      class="form-control"
-      required
-    )
-    
-    label(for="nutritiveScore") Score nutritif :
-    input(
-      type="text"
-      name="nutritiveScore"
-      class="form-control"
-      required
-    )
-
-    label(for="category") Catégorie :
-    select(
-      type="dropDown"
-      name="category"
-      class="form-control"
-      required
-    )
-      each category in ['Breakfast','lunch','supper','desert','snacks']
-        option=category
-
+    br
+    br
     input(
       type="submit"
       value="Submit"
