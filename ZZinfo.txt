@@ -31,46 +31,6 @@ with a difficult-to-remember syntax.
 Now, type npm run watch from the terminal and visit http://localhost:8000.
 _____________________________________________________________________________
 
+Sources :
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    button(
-      class="navbar-toggler" 
-      type="button" 
-      data-toggle="collapse" 
-      data-target="#navbarNav" 
-      aria-controls="navbarNav" 
-      aria-expanded="false" 
-      aria-label="Toggle navigation"
-    ) 
-
-    span(
-      class="navbar-toggler-icon"
-    )
-
-
-
-
-
-
-
+https://bbbootstrap.com/snippets/product-list-65909871  ==> list of products
