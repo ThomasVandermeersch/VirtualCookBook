@@ -10,7 +10,10 @@ module.exports = function searchProduct(query, res){
     //Find a product with the given query and return it
     Product.find(query,{_id:0})
     .then((products) =>{
-        res.end(JSON.stringify(products))
+        Product.distinct('category')
+            .then((categories)=>{
+                res.render('searchProduct', { categories : categories, products: products })            
+            })
     })
     .catch(() => { res.send('Sorry! Something went wrong.'); });
 }
