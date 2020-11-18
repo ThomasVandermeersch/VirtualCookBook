@@ -12,8 +12,8 @@ objectArrayResponse1 = [object2,object3]
 describe('Word similarity test',()=>{
     it('should return ',()=>{
         assert.equal(
-            wordSimilarity(objectArray,"hello","name",0.7),
-            objectArrayResponse1
+            JSON.stringify(wordSimilarity(objectArray,"haricots","name",0.7)),
+            JSON.stringify(objectArrayResponse1)
         )
     })
 });
