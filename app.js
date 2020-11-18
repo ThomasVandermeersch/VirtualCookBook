@@ -20,6 +20,7 @@ mongoose.connection
 
 require('./models/Product');
 require('./models/Recipe');
+require('./models/users');
 
 //Import Controllers functions
 const addProduct = require("./controller/addProduct.js")
@@ -44,15 +45,26 @@ const bodyParser = require('body-parser');
 const passport = require('passport')
 const facebookStrategy = require('passport-facebook').Strategy
 const session = require('express-session')
+const userSchema = mongoose.model('users')
 
 var configAuth = require('./auth');
+
+// used to serialize the user
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
+
+// used to deserialize the user
+passport.deserializeUser(function (id, done) {
+    return done(null, user)
+});
 
 
 passport.use(new facebookStrategy({
     clientID: configAuth.facebookAuth.clientID,
     clientSecret: configAuth.facebookAuth.clientSecret,
     callbackURL: configAuth.facebookAuth.callbackURL,
-    },
+},
     function (accessToken, refreshToken, profile, done) {
         process.nextTick(function () {
             userSchema.findOne({ 'facebook.id': profile.id }, function (err, user) {
@@ -61,16 +73,20 @@ passport.use(new facebookStrategy({
                 if (user)
                     return done(null, user);
                 else {
-                    var newUser = new user();
-                    newUser.facebook.id = profile.id;
-                    newUser.facebook.token = accessToken;
-                    newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
-                    newUser.facebook.email = profile.emails[0].value;
 
-                    newUser.save(function (err) {
+                    var newUser = {};
+
+                    newUser["facebook.id"] = profile.id;
+                    newUser["facebook.token"] = accessToken;
+                    newUser["facebook.name"] = profile.name.givenName + ' ' + profile.name.familyName;
+                    //newUser["facebook.email"] = profile.emails[0].value;
+
+                    const newUser2 = new userSchema(newUser);
+
+                    newUser2.save(function (err) {
                         if (err)
                             throw err;
-                        return done(null, newUser)
+                        return done(null, newUser2)
 
                     })
                 }
@@ -79,7 +95,7 @@ passport.use(new facebookStrategy({
         });
     }
 ));
-  
+
 
 
 
@@ -101,7 +117,7 @@ app.use(express.static('public')); //Load files from 'public' ->CSS
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // //Facebook Auth
-// app.use(passport.initialize());
+app.use(passport.initialize());
 // app.use(passport.session());
 // app.use(session(process.env.FACEBOOKKEY))
 
@@ -110,37 +126,37 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
-app.get("/", function (req, res) {
+app.get("/", checkAuthenticated, function (req, res) {
     res.render('form', { title: 'Registration form' });
 })
 
-app.get("/add/Recipe", function (req, res) {
+app.get("/add/Recipe",checkAuthenticated, function (req, res) {
     res.render('newrecipe', { title: 'Add Recipe' })
 })
 
-app.get("/add/Product", function (req, res) {
+app.get("/add/Product",checkAuthenticated, function (req, res) {
     res.render('newproduct', { title: 'Add Product' })
 })
 
-app.get("/search/Product", async (req, res) => {
+app.get("/search/Product", checkAuthenticated,async (req, res) => {
     searchProduct(req.query, res)
 })
 
-app.get("/search/Recipe", async (req, res) => {
+app.get("/search/Recipe",checkAuthenticated, async (req, res) => {
     searchRecipe(req.query, res)
 })
 
-app.post("/addProduct", function (req, res) {
+app.post("/addProduct", checkAuthenticated,function (req, res) {
     res.redirect("/search/Product")
     addProduct(req.body)
 })
 
-app.post("/addRecipe", (req, res) => {
+app.post("/addRecipe", checkAuthenticated,(req, res) => {
     res.redirect("/search/Recipe")
     addRecipe(req.body)
 })
 
-app.get("/home", function (req, res) {
+app.get("/home", checkAuthenticated, function (req, res) {
     res.render('home', { title: 'CookBook - Home' });
 })
 
@@ -167,6 +183,23 @@ app.get('/auth/facebook/callback',
     }));
 
 
+
+
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next()
+    }
+    res.redirect("/register")
+}
+
+
+
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return res.redirect('/')
+    }
+    next()
+}
 
 
 app.listen(8000)
