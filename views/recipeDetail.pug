@@ -1,0 +1,10 @@
+extends layout
+block content
+    
+    if errors
+        ul.my-errors
+            for error in errors
+                li= error.msg
+
+
+    p= 'Détails de la recette ' + id

@@ -8,7 +8,7 @@ const Recipe = mongoose.model('Recipe');
 
 module.exports = function searchRecipe(query, res){
     //Find a product with the given query and return it
-    Recipe.find(query,{_id:0})
+    Recipe.find(query)
     .then((recipes) =>{
         Recipe.distinct('category')
             .then((categories)=>{

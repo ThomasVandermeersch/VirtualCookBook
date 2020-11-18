@@ -75,6 +75,12 @@ app.post("/addRecipe", (req, res) => {
     addRecipe(req.body)
 })
 
+
+app.get('/recipeDetail/:recipeID', function(req, res) {
+    console.log(req.params)
+    return res.render('recipeDetail', {tile:"Détails", id:req.params.recipeID})
+  }); 
+
 app.listen(8000)
 
 
