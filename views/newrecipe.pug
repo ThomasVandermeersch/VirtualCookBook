@@ -33,13 +33,15 @@ block content
       required
     )
 
-    label(for="category") Catégorie :
-    input(
-      type="text"
+     label(for="category") Catégorie :
+    select(
+      type="dropDown"
       name="category"
       class="form-control"
       required
     )
+      each category in ['Breakfast','lunch','supper','desert','snacks']
+        option=category
 
     input(
       type="submit"

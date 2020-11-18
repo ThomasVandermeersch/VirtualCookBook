@@ -18,7 +18,7 @@ block content
       required
     )
 
-    label(for="calories") Calories:
+    label(for="calories") Calories par 100g:
     input(
       type="text"
       name="calories"
@@ -27,20 +27,24 @@ block content
     )
     
     label(for="unity") Unité de mesure :
-    input(
-      type="text"
+    select(
+      type="dropDown"
       name="unity"
       class="form-control"
       required
     )
+      each unity in ['g','mL']
+        option=unity
 
     label(for="category") Catégorie :
-    input(
-      type="text"
+    select(
+      type="dropDown"
       name="category"
       class="form-control"
       required
     )
+      each category in ['Fruit','Cereal','Meat','Liquid','Spice','Other']
+        option=category
 
     input(
       type="submit"
