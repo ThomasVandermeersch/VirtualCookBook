@@ -18,8 +18,11 @@ module.exports = function wordSimilarity(mongoObject,word,field,level){
     for (var i = 0; i < mongoObject.length; i++) {
         try {        
             var score = stringSimilarity.compareTwoStrings(mongoObject[i][field].toLowerCase(),word)
-            var objectAndScore = {score:score,object:mongoObject[i]}
-            ratingArray.push(objectAndScore)
+            if(score >= level){
+                var objectAndScore = {score:score,object:mongoObject[i]}
+                ratingArray.push(objectAndScore)
+            }
+
           } catch (error) {
             //console.error(error);
           }
@@ -30,9 +33,7 @@ module.exports = function wordSimilarity(mongoObject,word,field,level){
     
     var result = []
     for (var j = 0; j < ratingArray.length; j++) {
-        if(ratingArray[j].score >= level){
-            result.push(ratingArray[j].object)
-        }
+        result.push(ratingArray[j].object)
     }        
     return result
 }
