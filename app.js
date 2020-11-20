@@ -32,6 +32,7 @@ const searchRecipe = require("./controller/searchRecipe")
 const express = require("express")
 const path = require('path');
 const bodyParser = require('body-parser');
+const db_addProduct = require('./MongoDB management/db_addProduct');
 
 
 app = express()
@@ -67,7 +68,10 @@ app.get("/search/Recipe", async (req, res) => {
 
 app.post("/addProduct", function (req, res) {
     res.redirect("/search/Product")
-    addProduct(req.body)
+    product = addProduct(req.body)
+    
+    const db_addProduct = require("./MongoDB management/db_addProduct")
+    db_addProduct(product)
 })
 
 app.post("/addRecipe", (req, res) => {
