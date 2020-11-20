@@ -1,4 +1,3 @@
-const { response } = require('express')
 const distinctValues = require('../Controller/distinctValues')
 
 
@@ -8,13 +7,13 @@ object3 = {name:'Pierre',age:36}
 
 array = [object1,object2,object3]
 
-describe('Simple Math Test', () => {
+describe('Disctinct value test', () => {
     it('should return two same list', (done) => {
-        var response = distinctValues(array,"age")
-        if(response.equals([55,36])){
+        var response = JSON.stringify(distinctValues(array,"age"))
+        if(response == JSON.stringify([55,36])){
                done()
         }
-        else if(response.equals([36,55])){
+        else if(response == JSON.stringify([36,55])){
             done()
         }
         else{
@@ -22,12 +21,12 @@ describe('Simple Math Test', () => {
         }
     });
     
-    it('should return two same list', () => {
-        var response = distinctValues(array,"name")
-        if(response.equals(['Pierre','Jean'])){
+    it('should return two same list', (done) => {
+        response = JSON.stringify(distinctValues(array,"name"))
+        if(response == JSON.stringify(['Pierre','Jean'])){
                done()
         }
-        else if(response.equals(['Jean','Pierre'])){
+        else if(response == JSON.stringify(['Jean','Pierre'])){
             done()
         }
         else{
