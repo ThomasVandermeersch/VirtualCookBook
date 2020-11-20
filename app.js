@@ -32,7 +32,7 @@ const searchRecipe = require("./controller/searchRecipe")
 const express = require("express")
 const path = require('path');
 const bodyParser = require('body-parser');
-const db_addProduct = require('./MongoDB management/db_addProduct');
+
 
 
 app = express()
@@ -76,7 +76,10 @@ app.post("/addProduct", function (req, res) {
 
 app.post("/addRecipe", (req, res) => {
     res.redirect("/search/Recipe")
-    addRecipe(req.body)
+    recipe = addProduct(req.body)
+    
+    const db_addProduct = require("./MongoDB management/db_addRecipe")
+    db_addProduct(recipe)
 })
 
 
