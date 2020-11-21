@@ -27,8 +27,9 @@ const addRecipe = require("./controller/addRecipe")
 const searchProduct = require("./controller/searchProduct")
 const searchRecipe = require("./controller/searchRecipe")
 const showProduct = require("./Controller/showProduct")
-
+const showRecipe = require("./Controller/showRecipe")
 const db_searchProduct = require("./MongoDB management/db_searchProduct")
+const db_searchRecipe = require("./MongoDB management/db_searchRecipe")
 
 //Creation of a server
 const express = require("express")
@@ -67,8 +68,9 @@ app.get("/search/Product", async (req, res) => {
 })
 
 app.get("/search/Recipe", async (req, res) => {
-    searchRecipe(req.query)
-})
+    search = searchRecipe(req.query)
+    var recipes = await db_searchRecipe(search[0])
+    res.render('searchRecipe', showRecipe(recipes, search[1]))})
 
 app.post("/addProduct", function (req, res) {
     res.redirect("/search/Product")

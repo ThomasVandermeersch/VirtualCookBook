@@ -24,6 +24,37 @@ block content
                 each filter in categories
                     option=filter
 
+
+        div(class="form-check form-check-inline")
+            input(
+                type="submit"
+                value="Apply filter"
+                class="btn btn-secondary"
+            )
+
+    form(action="/search/Recipe" method="GET")    
+        div(class="form-check form-check-inline")
+            label(for="search") Search :
+        
+        div(class="form-check form-check-inline")
+            input(
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder= "Recipe's name"
+            required
+        )
+
+        div(class="form-check form-check-inline")
+            input(
+                type="submit"
+                value="Search "
+                class="btn btn-secondary"
+            )
+
+
+
+
         //- div(class="form-check form-check-inline")
         //-     p Nutrition score filter :
         
@@ -37,18 +68,13 @@ block content
         //-         each filter in categories
         //-             option=filter
         
-        div(class="form-check form-check-inline")
-            input(
-                type="submit"
-                value="Apply filter"
-                class="btn btn-secondary"
-            )
+
         
 
     
     div(class="row")
         div(class="list-group shadow")
-            each val in products
+            each val in recipes
                 p
                 ul(class="list-group shadow")
                     li(class="list-group-item")
