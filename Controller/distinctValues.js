@@ -1,6 +1,6 @@
-const { response } = require("express")
 
-//Recieves an array of objects and returns an array
+//This function recieves an array of objects and a field name.
+//The function returns all distinct values of a specific object key (this key is selected by the field parameter).
 module.exports = function distinctValues(array,field){
     var responseArray = []
     for( var i=0 ; array.length > i ; i++ ){

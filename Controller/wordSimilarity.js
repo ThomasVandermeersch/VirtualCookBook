@@ -1,17 +1,11 @@
 const stringSimilarity = require('string-similarity')
 
-// var similarity = stringSimilarity.compareTwoStrings('tomate ', 'TomatE'); 
- 
-// var matches = stringSimilarity.findBestMatch('healed', ['edward', 'sealed', 'theatre']);
 
-// console.log(matches)
-
-//This function recieves a MongoDB object in Input
-//The function returns all elements that are similar to the searched word
-//The word level can be congigured
-
+//This function recieves a list of object (mongoObject), a word, a field and a level)
+//The function returns all the mongoObject with a field that is similar to the word.
+//We can choose the level of similarity.
+//Setting level of similiraty to 1 means that the objectfields have to be strictly identical to the mongoField
 module.exports = function wordSimilarity(mongoObject,word,field,level){
-    //This array will contain the words of the mongoObject with key corresponding to the field parametre
     var ratingArray = []
     word = word.toLowerCase()
     
@@ -24,7 +18,7 @@ module.exports = function wordSimilarity(mongoObject,word,field,level){
             }
 
           } catch (error) {
-            //console.error(error);
+            console.error(error);
           }
     }
     ratingArray.sort((a, b) => {
@@ -37,11 +31,3 @@ module.exports = function wordSimilarity(mongoObject,word,field,level){
     }        
     return result
 }
-
-// a = wordSimilarity([
-//             {name:1,id:"Bonjour les amis"},
-//             {name:2,id:"Bonjour ami"},
-//             {name:4,id:"Bonjour le ami"},
-//                                 ],"Bonjour le ami","id",0.6)
-
-// console.log(a)
