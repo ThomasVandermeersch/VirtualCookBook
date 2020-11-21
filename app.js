@@ -79,7 +79,7 @@ passport.use(new facebookStrategy({
                     newUser["facebook.id"] = profile.id;
                     newUser["facebook.token"] = accessToken;
                     newUser["facebook.name"] = profile.name.givenName + ' ' + profile.name.familyName;
-                    //newUser["facebook.email"] = profile.emails[0].value;
+                    // newUser["facebook.email"] = profile.emails[0].value;
 
                     const newUser2 = new userSchema(newUser);
 
@@ -95,8 +95,6 @@ passport.use(new facebookStrategy({
         });
     }
 ));
-
-
 
 
 
@@ -164,6 +162,9 @@ app.get("/register", function (req, res) {
     res.render('register', { title: 'Registration' });
 })
 
+app.get("/privacy", function (req, res) {
+    res.render('privacy_policy');
+})
 
 
 
@@ -171,6 +172,7 @@ app.get("/register", function (req, res) {
 // Facebook will redirect the user back to the application at
 //     /auth/facebook/callback
 app.get('/auth/facebook', passport.authenticate('facebook'));
+// app.get('/auth/facebook', passport.authenticate('facebook', {scope:['email']}));
 
 // Facebook will redirect the user to this URL after approval.  Finish the
 // authentication process by attempting to obtain an access token.  If
@@ -178,7 +180,7 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 // authentication has failed.
 app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-        successRedirect: '/',
+        successRedirect: '/home',
         failureRedirect: '/login'
     }));
 
@@ -200,6 +202,19 @@ function checkNotAuthenticated(req, res, next) {
     }
     next()
 }
+
+
+
+
+
+app.use(session({
+    secret:process.env.SESSION_SECRET,
+    resave:false,
+    saveUninitialized:false,
+    cookie:{_expires : 5*60*1000 }, // time im ms before timeout
+    }))
+
+
 
 
 app.listen(8000)
