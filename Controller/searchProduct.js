@@ -2,19 +2,30 @@
 
 
 const mongoose = require('mongoose');
-const wordSimilarity = require('../wordSimilarity.js')
+//const wordSimilarity = require('../wordSimilarity.js')
 
-//Search for Product model
-const Product = mongoose.model('Product');
+// //Search for Product model
+// const Product = mongoose.model('Product');
 
-module.exports = function searchProduct(query, res){
-    //Find a product with the given query and return it
-    const search = query.search
-    var Mquery = {}
-    if('category' in query){
-        Mquery = {category: query.category}
+//No additional features resolve for the moment
+//The first element of the array requires important information for the 
+//database, the second for the function.
+
+module.exports = function searchProduct(query){
+    if('search' in query && 'category' in query){
+        return [query.category, query.search]
     }
-    Product.find(Mquery,{_id:0})
+    else if('search' in query){
+        return [undefined, query.search]
+    }
+    else if('category' in query){
+        return [query.category,undefined]
+    }
+    else{
+        return [undefined,undefined]
+    }
+} 
+    /*Product.find(Mquery,{_id:0})
     .then((products) =>{
         Product.distinct('category')
             .then((categories)=>{
@@ -25,7 +36,6 @@ module.exports = function searchProduct(query, res){
                 res.render('searchProduct', { categories : categories, products: products })            
             })
     })
-    .catch(() => { res.send('Sorry! Something went wrong.'); });
-}
+    .catch(() => { res.send('Sorry! Something went wrong.'); });*/
 
 

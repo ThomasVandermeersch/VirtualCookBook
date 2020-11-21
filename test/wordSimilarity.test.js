@@ -1,4 +1,4 @@
-const wordSimilarity = require("../wordSimilarity.js")
+const wordSimilarity = require("../Controller/wordSimilarity.js")
 const assert = require('assert');
 
 
