@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "mocha",
+    "test": "make test",
+    "unitTest": "mocha",
     "start": "nodemon app.js",
     "watch": "nodemon ./start.js"
   },
