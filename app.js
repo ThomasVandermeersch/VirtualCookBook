@@ -81,7 +81,7 @@ app.get("/login",checkNotAuthenticated,function (req, res){
 })
 
 app.post('/loginPOST',passport.authenticate('local',{
-    successRedirect : '/search/Recipe',
+    successRedirect : '/',
     failureRedirect : '/login',
     failureFlash: true   
 }))
@@ -102,7 +102,10 @@ app.post("/registerPOST", async function(req,res){
     db_registerUser(registerRep)
 })
 app.get("/",checkAuthenticated, function (req, res) {
-    res.render('form', { title: 'Registration form' });
+    //console.log(req)
+    console.log(req.user)
+    console.log(req.user._id)
+    res.render('home', { title: 'Registration form', name: req.user.name });
 })
 
 app.get("/add/Recipe",checkAuthenticated, function (req, res) {
