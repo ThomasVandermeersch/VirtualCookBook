@@ -6,32 +6,30 @@ block content
   -data = data || {}
 
   h1 CookBook
-  h2 Register
+  h2 Sign In
   
   if errors
     ul.my-errors
       for error in errors
         li= error.msg
 
-  form(action="/registerPOST" method="POST" class="form-registration")
-    label(for="email") Email:
+  form(action="/login" method="POST" class="form-registration")
+    label(for="name") Email:
     input(
       type="email"
       id="name"
-      name="email"
+      name="name"
       class="form-control"
       value=data.name
-      required
     )
 
-    label(for="password") Password:
+    label(for="email") Password:
     input(
       type="password"
       id="email"
-      name="password"
+      name="email"
       class="form-control"
       value=data.email
-      required
     )
 
     input(

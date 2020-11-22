@@ -1,3 +1,7 @@
+
+//Website security
+const bcrypt = require('bcrypt')
+const users = []
 //Connexion to the database
 const mongoose = require('mongoose');
 require('dotenv').config();
@@ -20,6 +24,7 @@ mongoose.connection
 
 require('./models/Product');
 require('./models/Recipe');
+require('./models/User')
 
 //Import Controllers functions
 const addProduct = require("./controller/addProduct.js")
@@ -45,6 +50,28 @@ app.set('view engine', 'pug');
 app.use(express.static('public')); //Load files from 'public' ->CSS
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+app.get("/login",function (req, res){
+    res.render('login', { title: 'Log In' })
+})
+
+app.post('/loginPOSR',(req, res)=>{
+    
+})
+
+app.get("/register",async function (req,res){
+    res.render('form', {title:"Register"})
+})
+
+app.post("/registerPOST", async function(req,res){
+    res.redirect("/login")
+    const register = require('./Controller/register')
+    console.log(req.body)
+    const registerRep = await register(req.body)
+    //The add to the database
+    const db_registerUser = require('./MongoDB management/db_registerUser')
+    db_registerUser(registerRep)
+})
 app.get("/", function (req, res) {
     res.render('form', { title: 'Registration form' });
 })
@@ -89,5 +116,21 @@ app.get('/recipeDetail/:recipeID', function(req, res) {
     console.log(req.params)
     return res.render('recipeDetail', {tile:"Détails", id:req.params.recipeID})
   }); 
+
+
+
+  function checkAuthenticated(req,res, next){
+    if(req.isAuthenticated()){
+        return next()
+    }
+    res.redirect("/login")
+}
+
+function checkNotAuthenticated(req,res,next){
+    if(req.isAuthenticated()){
+        return res.redirect('/')
+    }
+    next()
+}
 
 app.listen(8000)
