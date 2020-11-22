@@ -13,23 +13,25 @@ block content
       for error in errors
         li= error.msg
 
-  form(action="/login" method="POST" class="form-registration")
-    label(for="name") Email:
+  form(action="/loginPOST" method="POST" class="form-registration")
+    label(for="email") Email:
     input(
       type="email"
       id="name"
-      name="name"
+      name="email"
       class="form-control"
       value=data.name
+      required
     )
 
-    label(for="email") Password:
+    label(for="password") Password:
     input(
       type="password"
       id="email"
-      name="email"
+      name="password"
       class="form-control"
       value=data.email
+      req
     )
 
     input(
@@ -37,4 +39,6 @@ block content
       value="Submit"
       class="btn btn-lg btn-primary btn-block"
     )
+    if messages.error 
+        p= messages.error
 

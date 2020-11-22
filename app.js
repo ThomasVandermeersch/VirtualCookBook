@@ -50,16 +50,43 @@ app.set('view engine', 'pug');
 app.use(express.static('public')); //Load files from 'public' ->CSS
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const passport = require('passport')
+const initializePassport = require('./passport-config')
 
-app.get("/login",function (req, res){
+const db_searchUser = require('./MongoDB management/db_searchUser')
+initializePassport(
+    passport,
+    async (email)=> await db_searchUser({'email':email,type:'local'}),
+    async (_id)=>  await db_searchUser({'_id':_id})
+    )
+
+const flash = require('express-flash')
+const session = require('express-session')
+app.use(flash())
+app.use(session({
+    secret:process.env.SESSION_SECRET,
+    resave:false,
+    saveUninitialized:false
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+
+
+
+
+
+
+app.get("/login",checkNotAuthenticated,function (req, res){
     res.render('login', { title: 'Log In' })
 })
 
-app.post('/loginPOSR',(req, res)=>{
-    
-})
+app.post('/loginPOST',passport.authenticate('local',{
+    successRedirect : '/search/Recipe',
+    failureRedirect : '/login',
+    failureFlash: true   
+}))
 
-app.get("/register",async function (req,res){
+app.get("/register",checkAuthenticated,async function (req,res){
     res.render('form', {title:"Register"})
 })
 
@@ -72,30 +99,30 @@ app.post("/registerPOST", async function(req,res){
     const db_registerUser = require('./MongoDB management/db_registerUser')
     db_registerUser(registerRep)
 })
-app.get("/", function (req, res) {
+app.get("/",checkAuthenticated, function (req, res) {
     res.render('form', { title: 'Registration form' });
 })
 
-app.get("/add/Recipe", function (req, res) {
+app.get("/add/Recipe",checkAuthenticated, function (req, res) {
     res.render('newrecipe', { title: 'Add Recipe' })
 })
 
-app.get("/add/Product", function (req, res) {
+app.get("/add/Product", checkAuthenticated, function (req, res) {
     res.render('newproduct', { title: 'Add Product' })
 })
 
-app.get("/search/Product", async (req, res) => {
+app.get("/search/Product",checkAuthenticated, async (req, res) => {
     search = searchProduct(req.query)
     var products = await db_searchProduct(search[0])
     res.render('searchProduct', showProduct(products, search[1]))
 })
 
-app.get("/search/Recipe", async (req, res) => {
+app.get("/search/Recipe",checkAuthenticated, async (req, res) => {
     search = searchRecipe(req.query)
     var recipes = await db_searchRecipe(search[0])
     res.render('searchRecipe', showRecipe(recipes, search[1]))})
 
-app.post("/addProduct", function (req, res) {
+app.post("/addProduct",checkAuthenticated, function (req, res) {
     res.redirect("/search/Product")
     product = addProduct(req.body)
     
@@ -103,7 +130,7 @@ app.post("/addProduct", function (req, res) {
     db_addProduct(product)
 })
 
-app.post("/addRecipe", (req, res) => {
+app.post("/addRecipe",checkAuthenticated, (req, res) => {
     res.redirect("/search/Recipe")
     recipe = addRecipe(req.body)
     
@@ -112,7 +139,7 @@ app.post("/addRecipe", (req, res) => {
 })
 
 
-app.get('/recipeDetail/:recipeID', function(req, res) {
+app.get('/recipeDetail/:recipeID', checkAuthenticated,function(req, res) {
     console.log(req.params)
     return res.render('recipeDetail', {tile:"Détails", id:req.params.recipeID})
   }); 
