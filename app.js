@@ -86,14 +86,16 @@ app.post('/loginPOST',passport.authenticate('local',{
     failureFlash: true   
 }))
 
-app.get("/register",checkAuthenticated,async function (req,res){
-    res.render('form', {title:"Register"})
+app.get('/forget', function(req,res){
+    res.end("<h1> Pas de chance </h1>")
+})
+app.get("/register",checkNotAuthenticated,async function (req,res){
+    res.render('register', {title:"Register"})
 })
 
 app.post("/registerPOST", async function(req,res){
     res.redirect("/login")
     const register = require('./Controller/register')
-    console.log(req.body)
     const registerRep = await register(req.body)
     //The add to the database
     const db_registerUser = require('./MongoDB management/db_registerUser')

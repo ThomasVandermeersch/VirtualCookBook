@@ -20,7 +20,11 @@ const userSchema = new mongoose.Schema({
   type:{
       type:String,
       trim: true,
-  }
+  },
+  name:{
+    type:String,
+    trim: true,
+}
 });
 
 module.exports = mongoose.model('User', userSchema);

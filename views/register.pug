@@ -6,7 +6,7 @@ script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js")
 
 html
     head
-        title Login Page
+        title Register Page
     
         link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous")
         link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous")
@@ -19,7 +19,7 @@ html
             div(class="d-flex justify-content-center h-100")
                 div(class="card")
                     div(class="card-header")
-                        h3 Sign In
+                        h3 Sign Up
                         div(class="d-flex justify-content-end social_icon")
                             span
                                 i(class="fab fa-facebook-square")
@@ -29,7 +29,15 @@ html
                                 I(class="fab fa-twitter-square")
                     
                     div(class="card-body")
-                        form(action="/loginPOST" method="POST")
+                        form(action="/registerPOST" method="POST")
+                             
+                            div(class="input-group form-group")
+                                div(class="input-group-prepend")
+                                    span(class="input-group-text")
+                                        i(class="fas fa-user")
+                                
+                                input(type="text" name='name' class="form-control" placeholder="User name")
+                            
                             div(class="input-group form-group")
                                 div(class="input-group-prepend")
                                     span(class="input-group-text")
@@ -44,9 +52,7 @@ html
                                 
                                 input(type="password" name='password' class="form-control" placeholder="password")
                             
-                            if messages.error 
-                                div(class="d-flex justify-content-center links")
-                                    p= messages.error
+       
                             
                             div(class="form-group")
                                 input(type="submit" value="Login" class="btn float-right login_btn")
@@ -54,9 +60,5 @@ html
                     div(class="card-footer")
                         div(class="d-flex justify-content-center links")
                             p Don't have an account? 
-                            a(href="/register")
-                                p Sign Up
-                        
-                        div(class="d-flex justify-content-center")
-                            a(href="/forget")
-                                p Forgot your password?
+                            a(href="/login")
+                                p Sign In
