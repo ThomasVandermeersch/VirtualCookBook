@@ -1,0 +1,14 @@
+
+extends layout
+block content
+    if errors
+        ul.my-errors
+            for error in errors
+                li= error.msg
+    h1 
+        p Are you sure you want to log out ?
+    form(action="/logout?_method=DELETE" method="POST" class="form-registration")
+        input(name='Log Out' type="submit" value="Yes, Log Out" class="btn btn-lg btn-primary btn-block")
+
+    form(action="/" method="GET" class="form-registration")
+        input(name='Stay' type="submit" value="No, stay on page" class="btn btn-lg btn-primary btn-block")

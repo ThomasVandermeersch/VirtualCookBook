@@ -62,6 +62,7 @@ initializePassport(
 
 const flash = require('express-flash')
 const session = require('express-session')
+const methodOverride = require('method-override')
 app.use(flash())
 app.use(session({
     secret:process.env.SESSION_SECRET,
@@ -70,6 +71,7 @@ app.use(session({
 }))
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(methodOverride('_method'))
 
 
 
@@ -85,6 +87,15 @@ app.post('/loginPOST',passport.authenticate('local',{
     failureRedirect : '/login',
     failureFlash: true   
 }))
+
+app.get('/logout',checkAuthenticated,(req,res)=>{
+    res.render('logout', {title:"Log Out"})
+})
+
+app.delete('/logout',function(req,res){
+    req.logOut()
+    res.redirect('/login')
+})
 
 app.get('/forget', function(req,res){
     res.end("<h1> Pas de chance </h1>")
