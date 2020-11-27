@@ -59,15 +59,7 @@ const userSchema = mongoose.model('users')
 
 var configAuth = require('./auth');
 
-// used to serialize the user
-passport.serializeUser(function (user, done) {
-    done(null, user);
-});
 
-// used to deserialize the user
-passport.deserializeUser(function (id, done) {
-    return done(null, user)
-});
 
 
 passport.use(new facebookStrategy({
@@ -124,7 +116,7 @@ app.set('view engine', 'pug');
 app.use(express.static('public')); //Load files from 'public' ->CSS
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const passport = require('passport')
+
 const initializePassport = require('./passport-config')
 
 const db_searchUser = require('./MongoDB management/db_searchUser')
@@ -135,7 +127,7 @@ initializePassport(
     )
 
 const flash = require('express-flash')
-const session = require('express-session')
+
 const methodOverride = require('method-override')
 app.use(flash())
 app.use(session({
@@ -257,7 +249,7 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 // authentication has failed.
 app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-        successRedirect: '/home',
+        successRedirect: '/',
         failureRedirect: '/login'
     }));
 
