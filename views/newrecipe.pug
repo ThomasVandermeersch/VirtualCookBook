@@ -9,6 +9,10 @@ block content
         li= error.msg
 
   form(action="/addRecipe" method="POST" class="form-registration")
+  h1 Nouvelle Recette
+    h2 Informations de base
+
+
     label(for="recipename") Recipe's name:
     input(
       type="text"
@@ -17,10 +21,10 @@ block content
       required
     )
 
-    label(for="time") Preparation Time (minutes):
+    label(for="totalTime") Total Preparation Time (minutes):
     input(
-      type="text"
-      name="time"
+      type="time"
+      name="totalTime"
       class="form-control"
       required
     )
@@ -43,84 +47,49 @@ block content
       each category in ['Breakfast','lunch','supper','desert','snacks']
         option=category
 
-
-    label(for="time") Preparation Time (minutes):
+    label(for="cuisson") type de cuisson :
     input(
       type="text"
-      name="time"
+      name="cuisson"
       class="form-control"
       required
     )
     
-    label(for="nutritiveScore") Score nutritif :
+    label(for="tCuisson") Temps de cuisson :
     input(
-      type="text"
-      name="nutritiveScore"
+      type="time"
+      name="tCuisson"
       class="form-control"
       required
     )
 
-    label(for="category") Catégorie :
-    select(
-      type="dropDown"
-      name="category"
-      class="form-control"
-      required
-    )
-      each category in ['Breakfast','lunch','supper','desert','snacks']
-        option=category
+    h2 
+    h2 STEPS
 
-    label(for="time") Preparation Time (minutes):
+    label(for="step1") Step 1 :
     input(
       type="text"
-      name="time"
+      name="step1"
       class="form-control"
       required
     )
+
+    label(for="step2") Step 2 :
+    input(
+      type="text"
+      name="step3"
+      class="form-control"
+      required
+    )   
     
-    label(for="nutritiveScore") Score nutritif :
+    label(for="step3") Step 3 :
     input(
       type="text"
-      name="nutritiveScore"
+      name="step3"
       class="form-control"
       required
     )
 
-    label(for="category") Catégorie :
-    select(
-      type="dropDown"
-      name="category"
-      class="form-control"
-      required
-    )
-      each category in ['Breakfast','lunch','supper','desert','snacks']
-        option=category
-
-    label(for="time") Preparation Time (minutes):
-    input(
-      type="text"
-      name="time"
-      class="form-control"
-      required
-    )
-    
-    label(for="nutritiveScore") Score nutritif :
-    input(
-      type="text"
-      name="nutritiveScore"
-      class="form-control"
-      required
-    )
-
-    label(for="category") Catégorie :
-    select(
-      type="dropDown"
-      name="category"
-      class="form-control"
-      required
-    )
-      each category in ['Breakfast','lunch','supper','desert','snacks']
-        option=category
 
     input(
       type="submit"
