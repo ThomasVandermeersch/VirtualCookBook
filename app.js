@@ -29,72 +29,9 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const db_addRecipe = require('./MongoDB management/db_addRecipe');
 
-
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
-
-//Facebook Auth
 const passport = require('passport')
-var facebookStrategy = require('passport-facebook').Strategy
+
 const session = require('express-session')
-const userSchema = mongoose.model('users')
-
-var configAuth = require('./auth');
-
-
-
-
-passport.use(new facebookStrategy({
-    clientID: configAuth.facebookAuth.clientID,
-    clientSecret: configAuth.facebookAuth.clientSecret,
-    callbackURL: configAuth.facebookAuth.callbackURL,
-},
-    function (accessToken, refreshToken, profile, done) {
-        process.nextTick(function () {
-            userSchema.findOne({ 'facebook.id': profile.id }, function (err, user) {
-                if (err)
-                    return done(err);
-                if (user)
-                    return done(null, user);
-                else {
-
-                    var newUser = {};
-
-                    newUser["facebook.id"] = profile.id;
-                    newUser["facebook.token"] = accessToken;
-                    newUser["facebook.name"] = profile.name.givenName + ' ' + profile.name.familyName;
-                    // newUser["facebook.email"] = profile.emails[0].value;
-
-                    const newUser2 = new userSchema(newUser);
-
-                    newUser2.save(function (err) {
-                        if (err)
-                            throw err;
-                        return done(null, newUser2)
-
-                    })
-                }
-
-            });
-        });
-    }
-));
-
-
-
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////
-
-
-
 
 app = express()
 app.set('views', path.join(__dirname, 'views'));
@@ -106,10 +43,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const initializePassport = require('./passport-config')
 
 const db_searchUser = require('./MongoDB management/db_searchUser')
+const db_facebookUser = require('./MongoDB management/db_insertFacebookUser')
 initializePassport(
     passport,
     async (email)=> await db_searchUser({'email':email,type:'local'}),
-    async (_id)=>  await db_searchUser({'_id':_id})
+    async (_id)=>  await db_searchUser({'_id':_id}),
+    async (profileId)=> await db_searchUser({'facebook.id': profileId ,type:'facebook'}),
+    async (facebookUser)=> db_facebookUser(facebookUser)
+    //searchUser
     )
 
 const flash = require('express-flash')
