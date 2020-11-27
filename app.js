@@ -43,7 +43,7 @@ const bodyParser = require('body-parser');
 
 //Facebook Auth
 const passport = require('passport')
-const facebookStrategy = require('passport-facebook').Strategy
+var facebookStrategy = require('passport-facebook').Strategy
 const session = require('express-session')
 const userSchema = mongoose.model('users')
 
@@ -116,8 +116,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // //Facebook Auth
 app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.session());
 // app.use(session(process.env.FACEBOOKKEY))
+
+app.use(session({
+    secret:process.env.SESSION_SECRET,
+    resave:false,
+    saveUninitialized:false,
+    // cookie:{_expires : 5*60*1000 }, // time im ms before timeout
+    }));
+    
 
 
 //_________________
@@ -128,7 +136,7 @@ app.get("/", checkAuthenticated, function (req, res) {
     res.render('form', { title: 'Registration form' });
 })
 
-app.get("/add/Recipe",checkAuthenticated, function (req, res) {
+app.get("/add/Recipe", function (req, res) {
     res.render('newrecipe', { title: 'Add Recipe' })
 })
 
@@ -154,7 +162,7 @@ app.post("/addRecipe", checkAuthenticated,(req, res) => {
     addRecipe(req.body)
 })
 
-app.get("/home", checkAuthenticated, function (req, res) {
+app.get("/home", function (req, res) {
     res.render('home', { title: 'CookBook - Home' });
 })
 
@@ -186,7 +194,6 @@ app.get('/auth/facebook/callback',
 
 
 
-
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next()
@@ -206,13 +213,6 @@ function checkNotAuthenticated(req, res, next) {
 
 
 
-
-app.use(session({
-    secret:process.env.SESSION_SECRET,
-    resave:false,
-    saveUninitialized:false,
-    cookie:{_expires : 5*60*1000 }, // time im ms before timeout
-    }))
 
 
 
