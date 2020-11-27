@@ -25,6 +25,7 @@ mongoose.connection
 require('./models/Product');
 require('./models/Recipe');
 require('./models/User')
+require('./models/users');
 
 //Import Controllers functions
 const addProduct = require("./controller/addProduct.js")
@@ -41,6 +42,79 @@ const express = require("express")
 const path = require('path');
 const bodyParser = require('body-parser');
 const db_addRecipe = require('./MongoDB management/db_addRecipe');
+
+
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+
+//Facebook Auth
+const passport = require('passport')
+var facebookStrategy = require('passport-facebook').Strategy
+const session = require('express-session')
+const userSchema = mongoose.model('users')
+
+var configAuth = require('./auth');
+
+// used to serialize the user
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
+
+// used to deserialize the user
+passport.deserializeUser(function (id, done) {
+    return done(null, user)
+});
+
+
+passport.use(new facebookStrategy({
+    clientID: configAuth.facebookAuth.clientID,
+    clientSecret: configAuth.facebookAuth.clientSecret,
+    callbackURL: configAuth.facebookAuth.callbackURL,
+},
+    function (accessToken, refreshToken, profile, done) {
+        process.nextTick(function () {
+            userSchema.findOne({ 'facebook.id': profile.id }, function (err, user) {
+                if (err)
+                    return done(err);
+                if (user)
+                    return done(null, user);
+                else {
+
+                    var newUser = {};
+
+                    newUser["facebook.id"] = profile.id;
+                    newUser["facebook.token"] = accessToken;
+                    newUser["facebook.name"] = profile.name.givenName + ' ' + profile.name.familyName;
+                    // newUser["facebook.email"] = profile.emails[0].value;
+
+                    const newUser2 = new userSchema(newUser);
+
+                    newUser2.save(function (err) {
+                        if (err)
+                            throw err;
+                        return done(null, newUser2)
+
+                    })
+                }
+
+            });
+        });
+    }
+));
+
+
+
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+
 
 
 
@@ -72,6 +146,8 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
+
+// app.use(session(process.env.FACEBOOKKEY))
 
 
 
@@ -162,7 +238,36 @@ app.get('/recipeDetail/:recipeID', checkAuthenticated,function(req, res) {
 
 
 
-  function checkAuthenticated(req,res, next){
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get("/privacy", function (req, res) {
+    res.render('privacy_policy');
+})
+
+
+
+// Redirect the user to Facebook for authentication.  When complete,
+// Facebook will redirect the user back to the application at
+//     /auth/facebook/callback
+app.get('/auth/facebook', passport.authenticate('facebook'));
+// app.get('/auth/facebook', passport.authenticate('facebook', {scope:['email']}));
+
+// Facebook will redirect the user to this URL after approval.  Finish the
+// authentication process by attempting to obtain an access token.  If
+// access was granted, the user will be logged in.  Otherwise,
+// authentication has failed.
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
+        successRedirect: '/home',
+        failureRedirect: '/login'
+    }));
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+  
+
+function checkAuthenticated(req,res, next){
     if(req.isAuthenticated()){
         return next()
     }

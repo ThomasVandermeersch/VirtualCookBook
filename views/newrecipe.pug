@@ -9,6 +9,10 @@ block content
         li= error.msg
 
   form(action="/addRecipe" method="POST" class="form-registration")
+  h1 Nouvelle Recette
+    h2 Informations de base
+
+
     label(for="recipename") Recipe's name:
     input(
       type="text"
@@ -17,10 +21,10 @@ block content
       required
     )
 
-    label(for="time") Preparation Time (minutes):
+    label(for="totalTime") Total Preparation Time (minutes):
     input(
-      type="text"
-      name="time"
+      type="time"
+      name="totalTime"
       class="form-control"
       required
     )
@@ -47,6 +51,51 @@ block content
     
     br
     br
+
+    label(for="cuisson") type de cuisson :
+    input(
+      type="text"
+      name="cuisson"
+      class="form-control"
+      required
+    )
+    
+    label(for="tCuisson") Temps de cuisson :
+    input(
+      type="time"
+      name="tCuisson"
+      class="form-control"
+      required
+    )
+
+    h2 
+    h2 STEPS
+
+    label(for="step1") Step 1 :
+    input(
+      type="text"
+      name="step1"
+      class="form-control"
+      required
+    )
+
+    label(for="step2") Step 2 :
+    input(
+      type="text"
+      name="step3"
+      class="form-control"
+      required
+    )   
+    
+    label(for="step3") Step 3 :
+    input(
+      type="text"
+      name="step3"
+      class="form-control"
+      required
+    )
+
+
     input(
       type="submit"
       value="Submit"
