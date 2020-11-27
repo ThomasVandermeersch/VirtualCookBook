@@ -1,7 +1,5 @@
 const LocalStategy = require("passport-local").Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
-const mongoose = require('mongoose')
-const userSchema = mongoose.model('users')
 const bcrypt = require('bcrypt')
 var configAuth = require('./auth');
 

@@ -1,17 +1,14 @@
 //Connexion to the database
-const mongoose = require('mongoose');
-require('dotenv').config();
 
+require('dotenv').config();
 const connexion = require('./MongoDB management/db_connect')
-//Connexion to the database
 connexion()
 
 //LINK THE DIFFERENT MODELS
-
 require('./models/Product');
 require('./models/Recipe');
 require('./models/User')
-require('./models/users');
+
 
 //Import Controllers functions
 const addProduct = require("./controller/addProduct.js")
@@ -22,40 +19,34 @@ const showProduct = require("./Controller/showProduct")
 const showRecipe = require("./Controller/showRecipe")
 const db_searchProduct = require("./MongoDB management/db_searchProduct")
 const db_searchRecipe = require("./MongoDB management/db_searchRecipe")
+const db_addRecipe = require('./MongoDB management/db_addRecipe');
+
 
 //Creation of a server
 const express = require("express")
 const path = require('path');
 const bodyParser = require('body-parser');
-const db_addRecipe = require('./MongoDB management/db_addRecipe');
-
 const passport = require('passport')
-
 const session = require('express-session')
-
-app = express()
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
-app.use(express.static('public')); //Load files from 'public' ->CSS
-app.use(bodyParser.urlencoded({ extended: true }));
-
-
 const initializePassport = require('./passport-config')
-
 const db_searchUser = require('./MongoDB management/db_searchUser')
 const db_facebookUser = require('./MongoDB management/db_insertFacebookUser')
+const flash = require('express-flash')
+const methodOverride = require('method-override')
+
 initializePassport(
     passport,
     async (email)=> await db_searchUser({'email':email,type:'local'}),
     async (_id)=>  await db_searchUser({'_id':_id}),
     async (profileId)=> await db_searchUser({'facebook.id': profileId ,type:'facebook'}),
     async (facebookUser)=> db_facebookUser(facebookUser)
-    //searchUser
     )
 
-const flash = require('express-flash')
-
-const methodOverride = require('method-override')
+app = express()
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+app.use(express.static('public')); //Load files from 'public' ->CSS
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(flash())
 app.use(session({
     secret:process.env.SESSION_SECRET,
@@ -66,12 +57,8 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
 
-// app.use(session(process.env.FACEBOOKKEY))
 
-
-
-
-
+//ROUTES ==> TO DO
 
 app.get("/login",checkNotAuthenticated,function (req, res){
     res.render('login', { title: 'Log In' })
@@ -143,9 +130,7 @@ app.post("/addProduct",checkAuthenticated, function (req, res) {
 
 app.post("/addRecipe",checkAuthenticated, (req, res) => {
     res.redirect("/search/Recipe")
-    recipe = addRecipe(req.body)
-    
-    const db_addRecipe = require("./MongoDB management/db_addRecipe")
+    recipe = addRecipe(req.body)    
     db_addRecipe(recipe)
 })
 
@@ -156,8 +141,6 @@ app.get('/recipeDetail/:recipeID', checkAuthenticated,function(req, res) {
   }); 
 
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/privacy", function (req, res) {
     res.render('privacy_policy');
 })
@@ -180,7 +163,6 @@ app.get('/auth/facebook/callback',
         failureRedirect: '/login'
     }));
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   function checkAuthenticated(req,res, next){
     if(req.isAuthenticated()){
