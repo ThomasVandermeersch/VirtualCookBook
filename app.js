@@ -1,24 +1,10 @@
-
-//Website security
-const bcrypt = require('bcrypt')
-const users = []
 //Connexion to the database
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-mongoose.connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
-
-mongoose.connection
-    .on('open', () => {
-        console.log('Mongoose connection open');
-    })
-    .on('error', (err) => {
-        console.log(`Connection error: ${err.message}`);
-    });
-
+const connexion = require('./MongoDB management/db_connect')
+//Connexion to the database
+connexion()
 
 //LINK THE DIFFERENT MODELS
 
@@ -255,11 +241,7 @@ app.get('/auth/facebook/callback',
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-  
-
-function checkAuthenticated(req,res, next){
+  function checkAuthenticated(req,res, next){
     if(req.isAuthenticated()){
         return next()
     }
