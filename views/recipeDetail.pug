@@ -7,4 +7,32 @@ block content
                 li= error.msg
 
 
-    p= 'Détails de la recette ' + id
+    br
+    br
+    br
+
+    h1= recipe.name
+    h2= "Total time : " + recipe.totalTime
+    h4= "Cooking time : " + recipe.tCuisson
+    p= "Nutritive Score : " + recipe.nutritiveScore 
+    p= "Category : " + recipe.category
+    h4 Steps
+    ol  
+        each step in recipe.steps
+            li= step
+
+
+    if recipe.imgLink
+        img(
+            src= recipe.imgLink
+            alt="Generic placeholder image" 
+            height="440" 
+            class="ml-lg-5 order-1 order-lg-2")
+    else
+        img(
+            src="https://www.nocowboys.co.nz/images/v3/no-image-available.png"
+            alt="Generic placeholder image" 
+            height="220" 
+            class="ml-lg-5 order-1 order-lg-2")
+
+    

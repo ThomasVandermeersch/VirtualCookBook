@@ -17,9 +17,11 @@ const searchProduct = require("./controller/searchProduct")
 const searchRecipe = require("./controller/searchRecipe")
 const showProduct = require("./Controller/showProduct")
 const showRecipe = require("./Controller/showRecipe")
+const showDetailRecipe = require("./Controller/showDetailRecipe")
 const db_searchProduct = require("./MongoDB management/db_searchProduct")
 const db_searchRecipe = require("./MongoDB management/db_searchRecipe")
 const db_addRecipe = require('./MongoDB management/db_addRecipe');
+
 
 
 //Creation of a server
@@ -117,7 +119,12 @@ app.get("/search/Product",checkAuthenticated, async (req, res) => {
 
 app.get("/search/Recipe",checkAuthenticated, async (req, res) => {
     search = searchRecipe(req.query)
-    var recipes = await db_searchRecipe(search[0])
+    //console.log(search)
+    var query = {}
+    if(search[0]){
+        query = {category:search[0]}
+    }
+    var recipes = await db_searchRecipe(query)
     res.render('searchRecipe', showRecipe(recipes, search[1]))})
 
 app.post("/addProduct",checkAuthenticated, function (req, res) {
@@ -133,13 +140,13 @@ app.post("/addRecipe",checkAuthenticated, (req, res) => {
     res.redirect("/search/Recipe")
     recipe = addRecipe(req.body)    
     db_addRecipe(recipe)
-    
 })
 
-
-app.get('/recipeDetail/:recipeID', checkAuthenticated,function(req, res) {
+app.get('/recipeDetail/:recipeID', checkAuthenticated,async function(req, res) {
     console.log(req.params)
-    return res.render('recipeDetail', {tile:"Détails", id:req.params.recipeID})
+    const recipe = await db_searchRecipe({_id:req.params.recipeID})
+    console.log(recipe)
+    res.render('recipeDetail', showDetailRecipe(recipe))
   }); 
 
 

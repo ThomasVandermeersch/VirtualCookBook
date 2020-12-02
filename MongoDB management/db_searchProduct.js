@@ -5,6 +5,7 @@ const Product = mongoose.model('Product');
 
 module.exports = function db_searchProduct(category){
     var query = {}
+    //console.log("searchProduct is called")
     if(category){
         query = {category:category}
     }
