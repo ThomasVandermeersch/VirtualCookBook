@@ -37,6 +37,10 @@ const recipeSchema = new mongoose.Schema({
   validated: {
     type: Boolean,
     trim: true,
+  },
+  steps: {
+    type: Array,
+    trim: true,
   }
 });
 

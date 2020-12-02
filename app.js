@@ -129,9 +129,11 @@ app.post("/addProduct",checkAuthenticated, function (req, res) {
 })
 
 app.post("/addRecipe",checkAuthenticated, (req, res) => {
+    console.log(req.body)
     res.redirect("/search/Recipe")
     recipe = addRecipe(req.body)    
     db_addRecipe(recipe)
+    
 })
 
 
@@ -169,7 +171,8 @@ app.get('/auth/facebook/callback',
         return next()
     }
     res.redirect("/login")
-}
+    }
+    
 
 function checkNotAuthenticated(req,res,next){
     if(req.isAuthenticated()){
