@@ -36,7 +36,7 @@ function initialize(passport, getUserByEmail, getUserById, getFacebookUser, inse
                 newUser["type"] = "facebook";
                 newUser["facebook.id"] = profile.id;
                 newUser["facebook.token"] = accessToken;
-                newUser["facebook.name"] = profile.displayName
+                newUser["name"] = profile.displayName
                 const date = Date()
                 newUser["created"] = date;
                 newUser["updated"] = date;
@@ -62,7 +62,8 @@ function initialize(passport, getUserByEmail, getUserById, getFacebookUser, inse
     authenticateFacebookUser))
 
 
-    passport.serializeUser((user,done)=> done(null,user))
+    passport.serializeUser((user,done)=> done(null,user.name))
+    
     passport.deserializeUser((_id,done)=> {
         return done(null, getUserById(_id))
     } )

@@ -97,10 +97,10 @@ app.post("/registerPOST", async function(req,res){
     db_registerUser(registerRep)
 })
 app.get("/",checkAuthenticated, function (req, res) {
-    //console.log(req)
-    console.log(req.user)
-    console.log(req.user._id)
-    res.render('home', { title: 'Registration form', name: req.user.name });
+    //console.log(req.session.passport.user)
+    // console.log(req.user)
+    // console.log(req.user._id)
+    res.render('home', { title: 'Registration form', name: req.session.passport.user });
 })
 
 app.get("/add/Recipe",checkAuthenticated, function (req, res) {
