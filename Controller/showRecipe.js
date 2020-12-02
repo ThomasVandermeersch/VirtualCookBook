@@ -8,5 +8,5 @@ module.exports = function showProduct(recipes,search){
     }
     const categories = distinctValues(recipes,"category")
 
-    return { categories : categories, recipes: recipes }          
+    return { categories : categories, recipes: recipes, title: "Recipe" }          
 }

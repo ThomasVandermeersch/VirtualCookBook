@@ -100,7 +100,7 @@ app.get("/",checkAuthenticated, function (req, res) {
     //console.log(req.session.passport.user)
     // console.log(req.user)
     // console.log(req.user._id)
-    res.render('home', { title: 'Registration form', name: req.session.passport.user });
+    res.render('home', { title: 'CookBook', name: req.session.passport.user });
 })
 
 app.get("/add/Recipe",checkAuthenticated, function (req, res) {
