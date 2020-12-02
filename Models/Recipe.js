@@ -48,6 +48,11 @@ const recipeSchema = new mongoose.Schema({
   imgLink:{
     type: String,
     trim: true,
+  },
+
+  creator:{
+    type: String,
+    trim: true,
   }
 });
 

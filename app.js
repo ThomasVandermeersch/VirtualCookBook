@@ -138,7 +138,7 @@ app.post("/addProduct",checkAuthenticated, function (req, res) {
 app.post("/addRecipe",checkAuthenticated, (req, res) => {
     console.log(req.body)
     res.redirect("/search/Recipe")
-    recipe = addRecipe(req.body)    
+    recipe = addRecipe(req.body, req.session.passport.user )    
     db_addRecipe(recipe)
 })
 
