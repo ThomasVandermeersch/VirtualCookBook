@@ -8,10 +8,9 @@ block content
       for error in errors
         li= error.msg
 
-  form(action="/addRecipe" method="POST" class="form-registration")
   h1 Nouvelle Recette
+  form(action="/addRecipe" method="POST" class="form" )
     h2 Informations de base
-
 
     label(for="recipename") Recipe's name:
     input(
@@ -67,33 +66,43 @@ block content
       class="form-control"
       required
     )
+ 
 
-    h2 
     h2 STEPS
+    br
+    div(id="formulaire")
+      label(for="step1") Step 1 :
+      input(
+        type="text"
+        name="step1"
+        class="form-control"
+        required
+      )
 
-    label(for="step1") Step 1 :
-    input(
-      type="text"
-      name="step1"
-      class="form-control"
-      required
-    )
+      label(for="step2") Step 2 :
+      input(
+        type="text"
+        name="step3"
+        class="form-control"
+        required
+      )   
+      
+      label(for="step3") Step 3 :
+      input(
+        type="text"
+        name="step3"
+        class="form-control"
+        required
+      )
 
-    label(for="step2") Step 2 :
-    input(
-      type="text"
-      name="step3"
-      class="form-control"
-      required
-    )   
-    
-    label(for="step3") Step 3 :
-    input(
-      type="text"
-      name="step3"
-      class="form-control"
-      required
-    )
+    button(
+      id = "NewStep"
+      type = "button"
+      class="btn btn-secondary"
+    ) New Step
+    script(src='/javascript/addRecipe.js')
+        
+  
 
 
     input(
