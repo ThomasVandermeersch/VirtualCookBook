@@ -30,7 +30,16 @@ const productSchema = new mongoose.Schema({
   validated: {
     type: Boolean,
     trim: true,
-  }
+  },
+  imgLink:{
+    type: String,
+    trim: true,
+  },
+
+  // creator:{
+  //   type: String,
+  //   trim: true,
+  // }
 });
 
 //Export the model to use it.
