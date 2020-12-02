@@ -6,14 +6,11 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  time: {
+  totalTime: {
     type: String,
     trim: true,
   },
-  calories: {
-    type: String,
-    trim: true,
-  },
+
   nutritiveScore: {
     type: String,
     trim: true,
@@ -22,10 +19,10 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  products: {
-    type: Array,
-    trim: true,
-  },
+  // products: {
+  //   type: Array,
+  //   trim: true,
+  // },
   created: {
     type: Date,
     trim: true,
@@ -38,8 +35,18 @@ const recipeSchema = new mongoose.Schema({
     type: Boolean,
     trim: true,
   },
+
+  tCuisson:{
+    type:String,
+    trim:true,
+  },
   steps: {
     type: Array,
+    trim: true,
+  },
+
+  imgLink:{
+    type: String,
     trim: true,
   }
 });

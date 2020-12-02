@@ -8,6 +8,6 @@ module.exports = function db_searchProduct(category){
     if(category){
         query = {category:category}
     }
-    return Recipe.find(query,{_id:0}).exec()
+    return Recipe.find(query).exec()
         .catch(() => { return "Something went wrong"})
 }
