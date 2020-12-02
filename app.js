@@ -136,16 +136,16 @@ app.post("/addProduct",checkAuthenticated, function (req, res) {
 })
 
 app.post("/addRecipe",checkAuthenticated, (req, res) => {
-    console.log(req.body)
+    //console.log(req.body)
     res.redirect("/search/Recipe")
     recipe = addRecipe(req.body, req.session.passport.user )    
     db_addRecipe(recipe)
 })
 
 app.get('/recipeDetail/:recipeID', checkAuthenticated,async function(req, res) {
-    console.log(req.params)
+    //console.log(req.params)
     const recipe = await db_searchRecipe({_id:req.params.recipeID})
-    console.log(recipe)
+    //console.log(recipe)
     res.render('recipeDetail', showDetailRecipe(recipe))
   }); 
 
