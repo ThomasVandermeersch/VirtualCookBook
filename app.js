@@ -16,10 +16,15 @@ const searchProduct = require("./controller/searchProduct")
 const searchRecipe = require("./controller/searchRecipe")
 const showProduct = require("./Controller/showProduct")
 const showRecipe = require("./Controller/showRecipe")
+const register = require('./Controller/register')
 const showDetailRecipe = require("./Controller/showDetailRecipe")
+
+//Import MongoDBmanagement functions
 const db_searchProduct = require("./MongoDBmanagement/db_searchProduct")
 const db_searchRecipe = require("./MongoDBmanagement/db_searchRecipe")
+const db_addProduct = require("./MongoDBmanagement/db_addProduct")
 const db_addRecipe = require('./MongoDBmanagement/db_addRecipe');
+const db_registerUser = require('./MongoDBmanagement/db_registerUser')
 
 
 
@@ -29,7 +34,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const passport = require('passport')
 const session = require('express-session')
-const initializePassport = require('./passport-config')
+const initializePassport = require('./Controller/passport-config')
 const db_searchUser = require('./MongoDBmanagement/db_searchUser')
 const db_facebookUser = require('./MongoDBmanagement/db_insertFacebookUser')
 const flash = require('express-flash')
@@ -65,67 +70,88 @@ app.use(methodOverride('_method'))
 //ROUTES
 //APP.GET
 
+//Show login page
 app.get("/login",checkNotAuthenticated,function (req, res){
     res.render('login', { title: 'Log In' })
 })
 
+//Show log out page 
 app.get('/logout',checkAuthenticated,(req,res)=>{
     res.render('logout', {title:"Log Out"})
 })
 
+//Show forget password page
 app.get('/forget', function(req,res){
     res.end("<h1> Pas de chance </h1>")
 })
 
+//Show register page
 app.get("/register",checkNotAuthenticated,async function (req,res){
     res.render('register', {title:"Register"})
 })
 
+//Show home page
 app.get("/",checkAuthenticated, function (req, res) {
     res.render('home', { title: 'CookBook', name: req.session.passport.user });
 })
 
+//Show add recipe page formular
 app.get("/add/Recipe",checkAuthenticated, function (req, res) {
     res.render('newrecipe', { title: 'Add Recipe' })
 })
 
+//Show add product page formular
 app.get("/add/Product", checkAuthenticated, function (req, res) {
     res.render('newproduct', { title: 'Add Product' })
 })
 
+//Show a page that returns the different products to the use.
 app.get("/search/Product",checkAuthenticated, async (req, res) => {
-    search = searchProduct(req.query)
+    //1. format the search method
+    search = searchProduct(req.query)  //returns an array  [category,search]
+    //where category is the selected category filter and search is the name filter.
+    
+    //2. Search in database with the category filter
     var products = await db_searchProduct(search[0])
-    res.render('searchProduct', showProduct(products, search[1]))
+
+    //3. Show the page
+    res.render('searchProduct', showProduct(products, search[1])) //showProduct checks for wordSimilarity and returns page.
 })
 
 app.get("/search/Recipe",checkAuthenticated, async (req, res) => {
+    //1. format the search method
     search = searchRecipe(req.query)
-    //console.log(search)
+    
+    //2. format the query for MongoDB request
     var query = {}
+    //If category is selected, add a category filter.
     if(search[0]){
         query = {category:search[0]}
     }
+    //2. Search in database with the category filter
     var recipes = await db_searchRecipe(query)
-    res.render('searchRecipe', showRecipe(recipes, search[1]))
+    //3. Show the page
+    res.render('searchRecipe', showRecipe(recipes, search[1]))//showRecipe checks for wordSimilarity and returns page.
 })
 
+//Show a specific recipe matching the recipeID.
 app.get('/recipeDetail/:recipeID', checkAuthenticated,async function(req, res) {
-    //console.log(req.params)
+    //1. Search in database
     const recipe = await db_searchRecipe({_id:req.params.recipeID})
-    //console.log(recipe)
+    //2. Show
     res.render('recipeDetail', showDetailRecipe(recipe))
 }); 
 
+//Show the privacy document
 app.get("/privacy", function (req, res) {
     res.render('privacy_policy');
 })
 
 // Redirect the user to Facebook for authentication.  When complete,
-// Facebook will redirect the user back to the application at
+// Facebook will redirect the user back to the application. at
 //     /auth/facebook/callback
 app.get('/auth/facebook', passport.authenticate('facebook'));
-// app.get('/auth/facebook', passport.authenticate('facebook', {scope:['email']}));
+// app.get('/auth/facebook', passport.authenticate('facebook', {scope:['email']})); //if you'd like to use facebook email decomment this line
 
 // Facebook will redirect the user to this URL after approval.  Finish the
 // authentication process by attempting to obtain an access token.  If
@@ -145,33 +171,38 @@ app.delete('/logout',function(req,res){
 
 
 //APP.POST
+
+//Allows the user to sign In
 app.post('/loginPOST',passport.authenticate('local',{
     successRedirect : '/',
     failureRedirect : '/login',
     failureFlash: true   
 }))
 
+//Allows the user to register on the website
 app.post("/registerPOST", async function(req,res){
     res.redirect("/login")
-    const register = require('./Controller/register')
+    //1. Encrypt password and add necessary database information.
     const registerRep = await register(req.body)
-    //To add to the database
-    const db_registerUser = require('./MongoDBmanagement/db_registerUser')
+    //2. Add user to the databse
     db_registerUser(registerRep)
 })
 
+//Add product to the databse
 app.post("/addProduct",checkAuthenticated, function (req, res) {
     res.redirect("/search/Product")
+    //1. Add necessary information to the product
     product = addProduct(req.body)
-    
-    const db_addProduct = require("./MongoDBmanagement/db_addProduct")
+    //2. Add product to the database
     db_addProduct(product)
 })
 
+//Add recipe to the database
 app.post("/addRecipe",checkAuthenticated, (req, res) => {
-    //console.log(req.body)
     res.redirect("/search/Recipe")
-    recipe = addRecipe(req.body, req.session.passport.user )    
+    //1. Add necessary information to the recipe
+    recipe = addRecipe(req.body, req.session.passport.user ) 
+    //2. Add recipe to the database
     db_addRecipe(recipe)
 })
 

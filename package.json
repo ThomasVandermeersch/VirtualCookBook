@@ -6,8 +6,7 @@
   "scripts": {
     "test": "make test",
     "unitTest": "mocha",
-    "start": "nodemon app.js",
-    "watch": "nodemon ./start.js"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
