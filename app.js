@@ -53,7 +53,8 @@ app.use(flash())
 app.use(session({
     secret:process.env.SESSION_SECRET,
     resave:false,
-    saveUninitialized:false
+    saveUninitialized:false,
+    cookie:{_expires : 90*60*1000 }, // time im ms before timeout}
 }))
 app.use(passport.initialize())
 app.use(passport.session())
