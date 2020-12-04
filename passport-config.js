@@ -4,8 +4,9 @@ const bcrypt = require('bcrypt')
 var configAuth = require('./auth');
 
 
-
+// This function recieves the passeport module and 4 functions for searching/adding user info in DB (getUserById, getFacebookUser, insertFacebookUser)
 function initialize(passport, getUserByEmail, getUserById, getFacebookUser, insertFacebookUser) {
+    //LOCAL auth
     const authenticateLocalUser = async (email, password,done)=> {
         const user = await getUserByEmail(email)
         if(user == null){
@@ -24,7 +25,7 @@ function initialize(passport, getUserByEmail, getUserById, getFacebookUser, inse
 
         }
     }
-    
+    //FACEBOOK auth
     const authenticateFacebookUser = (accessToken, refreshToken, profile, done)=>{
         process.nextTick(async function () {
             const facebookUser =  await getFacebookUser(profile.id)
@@ -32,6 +33,7 @@ function initialize(passport, getUserByEmail, getUserById, getFacebookUser, inse
                     return done(null, facebookUser);
             
             else {
+                //creating a new user
                 var newUser = {};
                 newUser["type"] = "facebook";
                 newUser["facebook.id"] = profile.id;
@@ -41,7 +43,7 @@ function initialize(passport, getUserByEmail, getUserById, getFacebookUser, inse
                 newUser["created"] = date;
                 newUser["updated"] = date;
 
-                // newUser["facebook.email"] = profile.emails[0].value;
+                // newUser["facebook.email"] = profile.emails[0].value; //Needs more autorisation from the user --> TODO
 
                 insertFacebookUser(newUser)
                 return done(null,newUser)

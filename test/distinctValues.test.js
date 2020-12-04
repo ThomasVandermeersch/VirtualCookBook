@@ -1,12 +1,15 @@
 const distinctValues = require('../Controller/distinctValues')
 
+//tests if distinct values are correctly found
 
+//Creating some objects
 object1 = {name:'Pierre',age:55}
 object2 = {name:'Jean',age:36}
 object3 = {name:'Pierre',age:36}
 
 array = [object1,object2,object3]
 
+//Perform tests
 describe('Disctinct value test', () => {
     it('should return two same list', (done) => {
         var response = JSON.stringify(distinctValues(array,"age"))

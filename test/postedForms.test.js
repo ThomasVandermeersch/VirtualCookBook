@@ -1,5 +1,6 @@
 const assert = require('assert');
 
+//Créating some objects
 const date = Date()
 const object = {name: "Pomme",calories: 123}
 const objectResp = {name: "Pomme",calories: 123, created: date, updated: date}
@@ -8,9 +9,9 @@ const addProduct = require('../Controller/addProduct')
 const addProductResult = addProduct(object)
 
 const addRecipe = require('../Controller/addRecipe')
-const addRecipeResult = addRecipe(object, "Jean-Louis")
+const addRecipeResult = addRecipe(object, "Jean-Guillaume")
 
-
+//tests if a product is well transformed for later DB upload
 describe('Product insertion', () => {
     it('should return same Product names', () => {
         assert.equal(addProductResult.name,objectResp.name);
@@ -25,11 +26,11 @@ describe('Product insertion', () => {
                 done()
             }
             else{
-                done("Updated is'nt of type Date")
+                done("Updated isn't of type Date")
             }
         }
         else{
-            done("Updated is'nt added")
+            done("Updated isn't added")
         }
     })
 
@@ -39,17 +40,17 @@ describe('Product insertion', () => {
                 done()
             }
             else{
-                done("Created is'nt of type Date")
+                done("Created isn't of type Date")
             }
         }
         else{
-            done("Created is'nt added")
+            done("Created isn't added")
         }
     })
 })
 
 
-
+//tests if a recipe is well transformed for later DB upload
 describe('Recipe insertion', () => {
     it('should return same Recipe names', () => {
         assert.equal(addRecipeResult.name,objectResp.name);

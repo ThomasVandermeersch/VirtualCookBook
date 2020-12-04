@@ -2,7 +2,7 @@ const assert = require('assert');
 const register = require('../Controller/register')
 const bcrypt = require('bcrypt')
 
-
+//tests the register function
 describe('Test registration', () => {
  it('should return two same hash', async () => {
         const registerResponse = await register({email:'thomas@test.be',password: "1234"})

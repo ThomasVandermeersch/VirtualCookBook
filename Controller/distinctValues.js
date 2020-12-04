@@ -1,5 +1,5 @@
 
-//This function recieves an array of objects and a field name.
+//This function recieves an array of objects and a field name (is the name of a key in a dictionary).
 //The function returns all distinct values of a specific object key (this key is selected by the field parameter).
 module.exports = function distinctValues(array,field){
     var responseArray = []

@@ -1,5 +1,5 @@
 
-//This function reformat the search of a Product in order to show the product and find Products in DB.
+//This function reformat the search of a Product in order to show the product and find Products in any DB. 
 module.exports = function searchProduct(query){
     if('search' in query && 'category' in query){
         return [query.category, query.search]

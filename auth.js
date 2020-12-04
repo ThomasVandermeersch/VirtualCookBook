@@ -1,3 +1,5 @@
+
+//OAuth connexion (Facebook,...)
 module.exports = {
     'facebookAuth':{
         'clientID': process.env.FACEBOOKAPPID,

@@ -1,5 +1,4 @@
 //Connexion to the database
-
 require('dotenv').config();
 const connexion = require('./MongoDB management/db_connect')
 connexion()
@@ -36,6 +35,7 @@ const db_facebookUser = require('./MongoDB management/db_insertFacebookUser')
 const flash = require('express-flash')
 const methodOverride = require('method-override')
 
+//initialasing passport (module to authenticate user)
 initializePassport(
     passport,
     async (email)=> await db_searchUser({'email':email,type:'local'}),
@@ -44,10 +44,11 @@ initializePassport(
     async (facebookUser)=> db_facebookUser(facebookUser)
     )
 
+//further user initialisation
 app = express()
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-app.use(express.static('public')); //Load files from 'public' ->CSS
+app.use(express.static('public')); //Load files from 'public' -> (CSS, image, JS...)
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(flash())
 app.use(session({
@@ -61,46 +62,26 @@ app.use(passport.session())
 app.use(methodOverride('_method'))
 
 
-//ROUTES ==> TO DO
+//ROUTES
+//APP.GET
 
 app.get("/login",checkNotAuthenticated,function (req, res){
     res.render('login', { title: 'Log In' })
 })
 
-app.post('/loginPOST',passport.authenticate('local',{
-    successRedirect : '/',
-    failureRedirect : '/login',
-    failureFlash: true   
-}))
-
 app.get('/logout',checkAuthenticated,(req,res)=>{
     res.render('logout', {title:"Log Out"})
-})
-
-app.delete('/logout',function(req,res){
-    req.logOut()
-    res.redirect('/login')
 })
 
 app.get('/forget', function(req,res){
     res.end("<h1> Pas de chance </h1>")
 })
+
 app.get("/register",checkNotAuthenticated,async function (req,res){
     res.render('register', {title:"Register"})
 })
 
-app.post("/registerPOST", async function(req,res){
-    res.redirect("/login")
-    const register = require('./Controller/register')
-    const registerRep = await register(req.body)
-    //The add to the database
-    const db_registerUser = require('./MongoDB management/db_registerUser')
-    db_registerUser(registerRep)
-})
 app.get("/",checkAuthenticated, function (req, res) {
-    //console.log(req.session.passport.user)
-    // console.log(req.user)
-    // console.log(req.user._id)
     res.render('home', { title: 'CookBook', name: req.session.passport.user });
 })
 
@@ -126,21 +107,7 @@ app.get("/search/Recipe",checkAuthenticated, async (req, res) => {
         query = {category:search[0]}
     }
     var recipes = await db_searchRecipe(query)
-    res.render('searchRecipe', showRecipe(recipes, search[1]))})
-
-app.post("/addProduct",checkAuthenticated, function (req, res) {
-    res.redirect("/search/Product")
-    product = addProduct(req.body)
-    
-    const db_addProduct = require("./MongoDB management/db_addProduct")
-    db_addProduct(product)
-})
-
-app.post("/addRecipe",checkAuthenticated, (req, res) => {
-    //console.log(req.body)
-    res.redirect("/search/Recipe")
-    recipe = addRecipe(req.body, req.session.passport.user )    
-    db_addRecipe(recipe)
+    res.render('searchRecipe', showRecipe(recipes, search[1]))
 })
 
 app.get('/recipeDetail/:recipeID', checkAuthenticated,async function(req, res) {
@@ -148,14 +115,11 @@ app.get('/recipeDetail/:recipeID', checkAuthenticated,async function(req, res) {
     const recipe = await db_searchRecipe({_id:req.params.recipeID})
     //console.log(recipe)
     res.render('recipeDetail', showDetailRecipe(recipe))
-  }); 
-
+}); 
 
 app.get("/privacy", function (req, res) {
     res.render('privacy_policy');
 })
-
-
 
 // Redirect the user to Facebook for authentication.  When complete,
 // Facebook will redirect the user back to the application at
@@ -173,8 +137,48 @@ app.get('/auth/facebook/callback',
         failureRedirect: '/login'
     }));
 
+//to Log Out
+app.delete('/logout',function(req,res){
+    req.logOut()
+    res.redirect('/login')
+})
 
-  function checkAuthenticated(req,res, next){
+
+//APP.POST
+app.post('/loginPOST',passport.authenticate('local',{
+    successRedirect : '/',
+    failureRedirect : '/login',
+    failureFlash: true   
+}))
+
+app.post("/registerPOST", async function(req,res){
+    res.redirect("/login")
+    const register = require('./Controller/register')
+    const registerRep = await register(req.body)
+    //To add to the database
+    const db_registerUser = require('./MongoDB management/db_registerUser')
+    db_registerUser(registerRep)
+})
+
+app.post("/addProduct",checkAuthenticated, function (req, res) {
+    res.redirect("/search/Product")
+    product = addProduct(req.body)
+    
+    const db_addProduct = require("./MongoDB management/db_addProduct")
+    db_addProduct(product)
+})
+
+app.post("/addRecipe",checkAuthenticated, (req, res) => {
+    //console.log(req.body)
+    res.redirect("/search/Recipe")
+    recipe = addRecipe(req.body, req.session.passport.user )    
+    db_addRecipe(recipe)
+})
+
+
+
+//Function to check if user is authenticated
+function checkAuthenticated(req,res, next){
     if(req.isAuthenticated()){
         return next()
     }
@@ -182,6 +186,8 @@ app.get('/auth/facebook/callback',
     }
     
 
+//Function to check if user is not authenticated
+    //A user doesn't have to register or login if authenticated
 function checkNotAuthenticated(req,res,next){
     if(req.isAuthenticated()){
         return res.redirect('/')
@@ -189,4 +195,7 @@ function checkNotAuthenticated(req,res,next){
     next()
 }
 
+//The port for the server
 app.listen(8000)
+
+console.log("Connect to CookBook on http://localhost:8000")

@@ -1,5 +1,5 @@
 
-//This function reformat the search of a Recipe in order to show the recipe and find Recipes in DB.
+//This function reformat the search of a Recipe in order to show the recipe and find Recipes in any DB.
 module.exports = function searchRecipe(query){
     if('search' in query && 'category' in query){
         return [query.category, query.search]

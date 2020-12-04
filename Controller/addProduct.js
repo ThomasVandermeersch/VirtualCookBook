@@ -1,5 +1,5 @@
 
-//This function completes the products information when they are added by a user.
+//This function completes products information when they are added by a user.
 module.exports = function addProduct(product){    
     const date = Date()
     

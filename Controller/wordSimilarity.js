@@ -1,10 +1,10 @@
 const stringSimilarity = require('string-similarity')
 
 
-//This function recieves a list of object (mongoObject), a word, a field and a level)
+//This function recieves an array of object, a word, a field, and a level
 //The function returns all the mongoObject with a field that is similar to the word.
 //We can choose the level of similarity.
-//Setting level of similiraty to 1 means that the objectfields have to be strictly identical to the mongoField
+//Setting level of similiraty to 1 means that the objectfields have to be strictly identical to the objectfield
 module.exports = function wordSimilarity(mongoObject,word,field,level){
     var ratingArray = []
     word = word.toLowerCase()

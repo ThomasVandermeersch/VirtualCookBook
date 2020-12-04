@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-//Define a Recipe model
+//Defines a Recipe model
 const recipeSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -56,4 +56,5 @@ const recipeSchema = new mongoose.Schema({
   }
 });
 
+//Export the model to use it.
 module.exports = mongoose.model('Recipe', recipeSchema);

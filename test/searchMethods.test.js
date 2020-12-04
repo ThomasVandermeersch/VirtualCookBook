@@ -3,7 +3,7 @@ const searchProduct = require("../Controller/searchProduct")
 const searchRecipe = require("../Controller/searchRecipe")
 
 
-
+//tests the search product function
 
 describe('Test  search Product', () => {
  it('should return a correct array [undefined,undefined] ', () => {
@@ -33,6 +33,7 @@ it("should return a correct array [undefined,'poisson'] ", () => {
     });
 });
 
+//tests the search recipe function
 describe('Test  search recipe', () => {
     it('should return a correct array [undefined,undefined] ', () => {
         assert.equal(

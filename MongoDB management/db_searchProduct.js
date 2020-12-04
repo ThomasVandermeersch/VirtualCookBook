@@ -2,10 +2,9 @@
 const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
 
-
+//Converts DB information to match mongoDB
 module.exports = function db_searchProduct(category){
     var query = {}
-    //console.log("searchProduct is called")
     if(category){
         query = {category:category}
     }

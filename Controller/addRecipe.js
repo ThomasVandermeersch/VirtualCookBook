@@ -1,5 +1,5 @@
 
-//This function completes the products information when they are added by a user.
+//This function completes recipes information when they are added by a user.
 module.exports = function addRecipe(recipe,username){        
     
     recipe["creator"] = username
