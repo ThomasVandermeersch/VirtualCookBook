@@ -6,8 +6,8 @@ This program uses nodeJS
 1. Install [node.js](https://nodejs.org/en/download/)
 2. Clone this repository
 3. Install all dependencies
-3.1 Open terminal shell in current folder
-3.2 Type following command
+   - Open terminal shell in current folder
+   - Type following command
 ```bash
 npm install
 ```
@@ -57,6 +57,6 @@ UnitTest to ensure the proper functioning of our system.
 This folder contains all the web pages of this project.
 The project is written using pug syntax which is compiled into HTML.
 
-##Authors 
+## Authors 
 
 Sing Martin and Vandermeersch Thomas
