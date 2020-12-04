@@ -29,7 +29,7 @@ Different function made to format data in order to get updated in a database
 - [Models](/Models)
 
 Defines different models used in this project
-- [MongoDB_management](/MongoDB management)
+- [MongoDB management](/MongoDBmanagement)
 
 Sending all the formated data to mongoDB, our default database
 - [Public](/public)

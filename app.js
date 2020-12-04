@@ -1,6 +1,6 @@
 //Connexion to the database
 require('dotenv').config();
-const connexion = require('./MongoDB management/db_connect')
+const connexion = require('./MongoDBmanagement/db_connect')
 connexion()
 
 //LINK THE DIFFERENT MODELS
@@ -17,9 +17,9 @@ const searchRecipe = require("./controller/searchRecipe")
 const showProduct = require("./Controller/showProduct")
 const showRecipe = require("./Controller/showRecipe")
 const showDetailRecipe = require("./Controller/showDetailRecipe")
-const db_searchProduct = require("./MongoDB management/db_searchProduct")
-const db_searchRecipe = require("./MongoDB management/db_searchRecipe")
-const db_addRecipe = require('./MongoDB management/db_addRecipe');
+const db_searchProduct = require("./MongoDBmanagement/db_searchProduct")
+const db_searchRecipe = require("./MongoDBmanagement/db_searchRecipe")
+const db_addRecipe = require('./MongoDBmanagement/db_addRecipe');
 
 
 
@@ -30,8 +30,8 @@ const bodyParser = require('body-parser');
 const passport = require('passport')
 const session = require('express-session')
 const initializePassport = require('./passport-config')
-const db_searchUser = require('./MongoDB management/db_searchUser')
-const db_facebookUser = require('./MongoDB management/db_insertFacebookUser')
+const db_searchUser = require('./MongoDBmanagement/db_searchUser')
+const db_facebookUser = require('./MongoDBmanagement/db_insertFacebookUser')
 const flash = require('express-flash')
 const methodOverride = require('method-override')
 
@@ -156,7 +156,7 @@ app.post("/registerPOST", async function(req,res){
     const register = require('./Controller/register')
     const registerRep = await register(req.body)
     //To add to the database
-    const db_registerUser = require('./MongoDB management/db_registerUser')
+    const db_registerUser = require('./MongoDBmanagement/db_registerUser')
     db_registerUser(registerRep)
 })
 
@@ -164,7 +164,7 @@ app.post("/addProduct",checkAuthenticated, function (req, res) {
     res.redirect("/search/Product")
     product = addProduct(req.body)
     
-    const db_addProduct = require("./MongoDB management/db_addProduct")
+    const db_addProduct = require("./MongoDBmanagement/db_addProduct")
     db_addProduct(product)
 })
 
