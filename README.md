@@ -11,7 +11,16 @@ This program uses nodeJS
 ```bash
 npm install
 ```
-4. Launch the server
+4. Add a file named ```.env``` in the main folder.
+This file must contain the following code : 
+```bash
+DATABASE = <mongoDB Path>
+SESSION_SECRET = <your secret key>
+FACEBOOKKEY = {​​​​secret: <facebook secret key>}​
+FACEBOOKAPPID = <your facebook app ID>
+FACEBOOKAPPSECRET = <your facebook app secret>
+```
+5. Launch the server
 
 For development 
 ```bash
@@ -22,7 +31,7 @@ For production
 ```bash
 node app.js
 ```
-5. Open on [localhost:8000](http://localhost:8000)
+6. Open on [localhost:8000](http://localhost:8000)
 
 ## License
 [MIT LICENSE](/LICENSE)
