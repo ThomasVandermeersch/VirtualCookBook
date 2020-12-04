@@ -13,7 +13,7 @@ npm install
 ```bash
 npm start
 ```
-5. Open on [CookBook](http://localhost:8000)
+5. Open on [localhost:8000](http://localhost:8000)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
