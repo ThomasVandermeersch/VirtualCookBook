@@ -1,44 +1,62 @@
 # CookBook
- CookBook is a platform for sharing recipes online with your friends
+ CookBook is a platform for sharing recipes online with your friends.
 
 ## Installation
 This program uses nodeJS
 1. Install [node.js](https://nodejs.org/en/download/)
-2. Clone this directory
+2. Clone this repository
 3. Install all dependencies
+3.1 Open terminal shell in current folder
+3.2 Type following command
 ```bash
 npm install
 ```
-4. Launch the server with 
+4. Launch the server
+
+For development 
 ```bash
 npm start
+```
+
+For production 
+```bash
+node app.js
 ```
 5. Open on [localhost:8000](http://localhost:8000)
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT LICENSE](/LICENSE)
 
-## Policy
-This website respects the facebook [policy](/policy.html) on the usage of private data
+## Privacy policy
+This website respects the facebook [privacy policy](/views/privacy_policy.pug) on the usage of private data
 
 ## Our different folders
 
 - [Controller](/Controller)
 
-Different function made to format data in order to get updated in a database
+Different function controlling the entire system.
+
 - [Models](/Models)
 
-Defines different models used in this project
+Defines different object models used in this project.
+
 - [MongoDB management](/MongoDBmanagement)
 
-Sending all the formated data to mongoDB, our default database
+Sending and recieving all request to our MongoDB database.
+
 - [Public](/public)
 
-Regrouping javascripts, CSS, and public images
+Regrouping javascripts, CSS, and public images.
+
 - [Test](/test)
 
-Unit test are present 
+UnitTest to ensure the proper functioning of our system.
+
 - [Views](/views)
 
-This folder contains all the different pages for this project
-This project is written using pug syntax
+This folder contains all the web pages of this project.
+The project is written using pug syntax which is compiled into HTML.
+
+##Authors
+
+Sing Martin and Vandermeersch Thomas
