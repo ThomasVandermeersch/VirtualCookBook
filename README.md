@@ -57,6 +57,6 @@ UnitTest to ensure the proper functioning of our system.
 This folder contains all the web pages of this project.
 The project is written using pug syntax which is compiled into HTML.
 
-##Authors
+##Authors 
 
 Sing Martin and Vandermeersch Thomas
