@@ -82,7 +82,7 @@ app.get('/logout',checkAuthenticated,(req,res)=>{
 
 //Show forget password page
 app.get('/forget', function(req,res){
-    res.end("<h1> Pas de chance </h1>")
+    res.end("<h1> Better luck next time </h1>")
 })
 
 //Show register page
