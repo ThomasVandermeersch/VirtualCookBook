@@ -84,16 +84,16 @@ block content
                                 h5(class="mt-0 font-weight-bold mb-2")
                                     p=  val.name
                             
-                                p(class="font-italic text-muted mb-0 small")= 'Score nutritif : ' + val.nutritiveScore 
-                                p(class="font-italic text-muted mb-0 small")= 'Ajouté par : ' + val.creator
+                                p(class="font-italic text-muted mb-0 small")= 'Nutritive score : ' + val.nutritiveScore 
+                                p(class="font-italic text-muted mb-0 small")= 'Added by : ' + val.creator
 
                                 div(class="d-flex align-items-center justify-content-between mt-1")
                                     h6(class="font-weight-bold my-2")
-                                        p= 'Catégorie : ' + val.category
+                                        p= 'Category : ' + val.category
                                 
                                 div(class="d-flex align-items-center justify-content-between mt-1")
                                     h6(class="font-weight-bold my-2")
-                                        p= 'Temps : ' + val.totalTime
+                                        p= 'Preparation time : ' + val.totalTime
                                 
                                 a(href="/recipeDetail/" + val._id)
                                     button(type="button" class="btn btn-secondary" value="Add Product") Details
