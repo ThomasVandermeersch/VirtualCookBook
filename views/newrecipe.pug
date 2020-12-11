@@ -8,9 +8,9 @@ block content
       for error in errors
         li= error.msg
 
-  h1 Nouvelle Recette
+  h1 New Recipe
   form(action="/addRecipe" method="POST" class="form" )
-    h2 Informations de base
+    h2 Basical information
 
     label(for="recipename") Recipe's name:
     input(
@@ -28,7 +28,7 @@ block content
       required
     )
     
-    label(for="category") Score nutritif :
+    label(for="category") Nutritive score:
     select(
       type="dropDown"
       name="nutritiveScore"
@@ -38,7 +38,7 @@ block content
       each category in ['A','B','C','D']
         option=category
 
-    label(for="category") Catégorie :
+    label(for="category") Category :
     select(
       type="dropDown"
       name="category"
@@ -51,7 +51,7 @@ block content
     br
     br
 
-    label(for="cuisson") type de cuisson :
+    label(for="cuisson") Cooking type :
     input(
       type="text"
       name="cuisson"
@@ -59,7 +59,7 @@ block content
       required
     )
     
-    label(for="tCuisson") Temps de cuisson :
+    label(for="tCuisson") Cooking time :
     input(
       type="time"
       name="tCuisson"
@@ -67,7 +67,7 @@ block content
       required
     )
 
-    label(for="imgLink") Lien d'image :
+    label(for="imgLink") Image link:
     input(
       type="text"
       name="imgLink"

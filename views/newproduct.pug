@@ -18,7 +18,7 @@ block content
       required
     )
 
-    label(for="calories") Calories par 100g:
+    label(for="calories") Calories by 100g:
     input(
       type="text"
       name="calories"
@@ -26,7 +26,7 @@ block content
       required
     )
     
-    label(for="unity") Unité de mesure :
+    label(for="unity") Measurement unit :
     select(
       type="dropDown"
       name="unity"
@@ -36,7 +36,7 @@ block content
       each unity in ['g','mL']
         option=unity
 
-    label(for="category") Catégorie :
+    label(for="category") Category :
     select(
       type="dropDown"
       name="category"
@@ -46,7 +46,7 @@ block content
       each category in ['Fruit','Cereal','Meat','Liquid','Spice','Other']
         option=category
 
-    label(for="imgLink") Lien d'image :
+    label(for="imgLink") Image link :
     input(
       type="text"
       name="imgLink"
